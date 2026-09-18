@@ -252,7 +252,6 @@ export const KrishiIntelligenceCard: React.FC<KrishiIntelligenceCardProps> = ({
       </div>
 
           </div>
-        </div>
       )}
 
       {/* ── CROPS TAB ────────────────────────────────────────── */}
@@ -279,7 +278,6 @@ export const KrishiIntelligenceCard: React.FC<KrishiIntelligenceCardProps> = ({
             ))}
           </div>
         </div>
-            </div>
           ) : (
             <div className="p-6 text-center text-sm text-slate-500 dark:text-slate-400">
               No specific crop recommendations available right now.

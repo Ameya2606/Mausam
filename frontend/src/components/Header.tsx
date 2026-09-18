@@ -21,6 +21,7 @@ import {
   Sun,
   Moon,
   MoreHorizontal
+} from 'lucide-react';
 import { Location } from '../lib/types';
 import { useLanguage } from '../hooks/useLanguage';
 import { useTheme } from '../hooks/useTheme';
@@ -334,8 +335,6 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </div>
 
-          </div>
-
           {/* Desktop Secondary Actions (Hidden under 1280px) */}
           <div className="hidden xl:flex items-center gap-1.5">
             {/* GPS Location */}
@@ -453,12 +452,12 @@ export const Header: React.FC<HeaderProps> = ({
             {t.nav_daily}
           </button>
           <button
-            onClick={() => onSelectSection('map')}
+            onClick={() => onSelectSection('radar')}
             className={`px-3 py-1 rounded-lg transition whitespace-nowrap ${
-              activeSection === 'map' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
+              activeSection === 'radar' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
             }`}
           >
-            {t.nav_map}
+            {t.nav_radar}
           </button>
           <button
             onClick={() => onSelectSection('warnings')}
