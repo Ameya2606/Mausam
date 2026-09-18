@@ -70,7 +70,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
     <div className="w-full space-y-6">
       
       {/* 1. VayuSync Natural Invitation Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-sky-50 via-indigo-50/70 to-white dark:from-slate-900 dark:via-indigo-950/40 dark:to-slate-900 border border-sky-200/80 dark:border-slate-800 p-4 sm:p-5 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-sky-50 via-indigo-50/70 to-white dark:from-slate-900 dark:via-indigo-950/40 dark:to-slate-900 border border-sky-200/80 dark:border-slate-800 p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-start gap-3.5">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold shrink-0 mt-0.5 shadow-md shadow-amber-500/20">
             <Sparkles className="w-5 h-5" />
@@ -84,7 +84,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                 {t.banner_invitation_badge}
               </span>
             </div>
-            <h3 className="text-base font-bold text-[#0B1F33] dark:text-white mt-0.5">
+            <h3 className="text-base font-heading font-bold text-[#0B1F33] dark:text-white mt-0.5">
               {t.banner_invitation_title}
             </h3>
             <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 max-w-2xl leading-relaxed">
@@ -155,7 +155,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                   <span>•</span>
                   <span className="font-mono whitespace-nowrap">{formattedLocalTime} {loc.timezone_abbreviation || 'IST'}</span>
                 </div>
-                <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0B1F33] dark:text-white mt-1">
+                <h2 className="text-2xl sm:text-4xl font-heading font-extrabold text-[#0B1F33] dark:text-white mt-1 tracking-tight">
                   {loc.name}
                 </h2>
                 <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 font-medium mt-1">
@@ -164,7 +164,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
               </div>
 
               <div className="flex items-baseline gap-3 sm:gap-4">
-                <div className="text-5xl sm:text-6xl md:text-7xl font-black text-[#0B1F33] dark:text-white tracking-tight">
+                <div className="text-5xl sm:text-6xl md:text-7xl font-heading font-black text-[#0B1F33] dark:text-white tracking-tight animate-float">
                   {Math.round(curr.temperature)}°<span className="text-2xl sm:text-3xl text-slate-400 font-normal">C</span>
                 </div>
                 <div className="text-xs text-slate-500 dark:text-slate-400 space-y-0.5">
@@ -179,7 +179,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
             {/* Meteorological Parameters Grid (8 Standard Parameters) */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
               
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
                 <div className="w-8 h-8 rounded-lg bg-sky-50 dark:bg-sky-950/60 flex items-center justify-center text-sky-600 dark:text-sky-400 shrink-0">
                   <Droplets className="w-4 h-4" />
                 </div>
@@ -189,7 +189,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
                 <div className="w-8 h-8 rounded-lg bg-teal-50 dark:bg-teal-950/60 flex items-center justify-center text-teal-600 dark:text-teal-400 shrink-0">
                   <Wind className="w-4 h-4" />
                 </div>
@@ -199,7 +199,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
                 <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
                   <Gauge className="w-4 h-4" />
                 </div>
@@ -209,7 +209,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
                 <div className="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
                   <Eye className="w-4 h-4" />
                 </div>
@@ -219,7 +219,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
                 <div className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-950/60 flex items-center justify-center text-orange-600 dark:text-orange-400 shrink-0">
                   <Sun className="w-4 h-4" />
                 </div>
@@ -229,7 +229,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
                 <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-950/60 flex items-center justify-center text-blue-600 dark:text-blue-400 shrink-0">
                   <CloudRain className="w-4 h-4" />
                 </div>
@@ -239,7 +239,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
                 <div className="w-8 h-8 rounded-lg bg-yellow-50 dark:bg-yellow-950/60 flex items-center justify-center text-yellow-600 dark:text-yellow-400 shrink-0">
                   <Sunrise className="w-4 h-4" />
                 </div>
@@ -249,7 +249,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0">
+              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
                 <div className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-950/60 flex items-center justify-center text-rose-600 dark:text-rose-400 shrink-0">
                   <Sunset className="w-4 h-4" />
                 </div>

@@ -9,6 +9,7 @@ import {
   RoutineWeatherImpact,
   CalendarConflict,
   HealthAQIIntelligence,
+  KrishiIntelligence,
   EmergencyContact,
   HelplineCategory,
   FeedbackSubmission,
@@ -797,6 +798,18 @@ function getFallbackIntelligence(weather: WeatherResponse, context: UserContext)
     outdoor_exercise_verdict: 'Safe for all outdoor activities today.',
   };
 
+  const krishi: KrishiIntelligence = {
+    spray_conditions: 'Favorable',
+    spray_score: 85,
+    soil_moisture_estimate: 'Adequate',
+    irrigation_needed: false,
+    irrigation_advice: 'Soil moisture within healthy range.',
+    pest_disease_risk: 'Low to Moderate',
+    harvesting_window: 'Delay harvesting if rain probability exceeds 50% to prevent grain spoilage.',
+    recommended_crops: ['Tomato', 'Moong (Green Gram)', 'Field Pea (Matar)'],
+    crop_reasoning: 'Moderate warmth and high humidity favor horticultural and legume growth.',
+  };
+
   return {
     is_personalized: Boolean(context.is_personalized),
     mausam_score: mausamScore,
@@ -811,6 +824,7 @@ function getFallbackIntelligence(weather: WeatherResponse, context: UserContext)
     activities,
     routine_impacts,
     calendar_conflicts,
+    krishi,
     health,
     event_planning: {
       sunlight: {

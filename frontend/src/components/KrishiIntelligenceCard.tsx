@@ -77,7 +77,7 @@ export const KrishiIntelligenceCard: React.FC<KrishiIntelligenceCardProps> = ({
   }, [krishiIntel, statusLevel, windSpeed, rainProb, loc.name, humidity, language]);
 
   return (
-    <div className="p-6 sm:p-7 rounded-3xl bg-white dark:bg-slate-900/80 border border-emerald-100 dark:border-slate-800 space-y-6 shadow-xs relative overflow-hidden transition-colors">
+    <div className="p-6 sm:p-7 rounded-3xl bg-white/90 dark:bg-slate-900/80 border border-emerald-100 dark:border-slate-800 space-y-6 shadow-sm relative overflow-hidden transition-all duration-300 ease-out hover:shadow-md hover:-translate-y-1">
       
       {/* Background Accent */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -95,7 +95,7 @@ export const KrishiIntelligenceCard: React.FC<KrishiIntelligenceCardProps> = ({
               </span>
               <span className="text-xs text-slate-400 dark:text-slate-500 font-mono">• VayuSync Krishi</span>
             </div>
-            <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight mt-0.5">
+            <h3 className="text-xl font-heading font-bold text-slate-900 dark:text-white tracking-tight mt-0.5">
               {t.krishi_title}
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">

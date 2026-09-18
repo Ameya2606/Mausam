@@ -94,7 +94,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
           <div>
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <h1 className="font-black text-lg sm:text-2xl tracking-wider text-[#0B1F33] dark:text-white uppercase font-sans leading-none">
+              <h1 className="font-black text-lg sm:text-2xl tracking-wider text-[#0B1F33] dark:text-white uppercase font-heading leading-none">
                 {t.app_title}
               </h1>
               <span className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-semibold tracking-wider uppercase rounded-full bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800">
@@ -287,7 +287,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Help & Report Button */}
           <button
             onClick={onOpenHelpReportModal}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-950/70 border border-rose-200 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-xs sm:text-sm font-semibold transition shadow-sm"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 hover:bg-rose-100 dark:hover:bg-rose-950/70 border border-rose-200 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-xs sm:text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md shadow-sm"
             title={t.btn_help_report}
           >
             <LifeBuoy className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
@@ -366,7 +366,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* Personalize Button (Visible on tablet/desktop, mobile uses bottom bar) */}
           <button
             onClick={onOpenPersonalizeModal}
-            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-950/70 border border-amber-200 dark:border-amber-900/50 text-amber-800 dark:text-amber-300 text-xs sm:text-sm font-semibold transition shadow-sm"
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 hover:bg-amber-100 dark:hover:bg-amber-950/70 border border-amber-200 dark:border-amber-900/50 text-amber-800 dark:text-amber-300 text-xs sm:text-sm font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md shadow-sm"
           >
             <SlidersHorizontal className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
             <span className="hidden lg:inline">{t.btn_customize}</span>

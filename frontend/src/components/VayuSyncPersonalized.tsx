@@ -200,7 +200,7 @@ export const VayuSyncPersonalized: React.FC<VayuSyncPersonalizedProps> = ({
                 </span>
               </div>
 
-              <h2 className="text-xl font-black text-[#0B1F33] dark:text-white tracking-tight">
+              <h2 className="text-2xl font-heading font-bold text-[#0B1F33] dark:text-white tracking-tight">
                 {getLocalizedRoleTitle(activePersonaId)}
               </h2>
 
@@ -250,10 +250,10 @@ export const VayuSyncPersonalized: React.FC<VayuSyncPersonalizedProps> = ({
                 <button
                   key={roleId}
                   onClick={() => setActivePersonaId(roleId)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition border ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all duration-300 ease-out border ${
                     isActive
-                      ? `${rCfg.themeColor.bg} ${rCfg.themeColor.text} ${rCfg.themeColor.border} ring-1 ring-sky-400 shadow-xs`
-                      : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-600 shadow-xs'
+                      ? `${rCfg.themeColor.bg} ${rCfg.themeColor.text} ${rCfg.themeColor.border} ring-1 ring-sky-400 shadow-sm scale-[1.02]`
+                      : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:text-slate-900 dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-600 shadow-xs hover:scale-[1.02]'
                   }`}
                 >
                   <RIcon className="w-3.5 h-3.5" />
@@ -315,7 +315,7 @@ export const VayuSyncPersonalized: React.FC<VayuSyncPersonalizedProps> = ({
             <div className="p-4 sm:p-5 rounded-3xl bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 text-slate-700 dark:text-slate-200 text-xs flex items-start gap-3.5 shadow-sm">
               <Sparkles className="w-5 h-5 text-sky-600 dark:text-sky-400 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-[#0B1F33] dark:text-white font-bold text-sm block">VayuSync Cross-Persona Priority Insight</strong>
+                <strong className="text-[#0B1F33] dark:text-white font-heading font-bold text-sm block tracking-wide">VayuSync Cross-Persona Priority Insight</strong>
                 <p className="mt-0.5 leading-relaxed text-slate-600 dark:text-slate-300">{sharedCrossPersonaAlert}</p>
               </div>
             </div>

@@ -405,7 +405,7 @@ function MainApp() {
           {/* Floating Voice Assistant Trigger (Bottom Right, elevated above telemetry bar) */}
           <button
             onClick={() => setIsAssistantOpen(true)}
-            className="fixed bottom-20 right-6 z-50 p-3.5 rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-xl shadow-slate-200/50 dark:shadow-none hover:scale-105 active:scale-95 transition flex items-center justify-center border border-slate-200 dark:border-slate-700"
+            className="fixed bottom-20 right-6 z-50 p-3.5 rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-xl shadow-slate-200/50 dark:shadow-none hover:scale-110 hover:-translate-y-1 hover:shadow-2xl active:scale-95 transition-all duration-300 flex items-center justify-center border border-slate-200 dark:border-slate-700 animate-float"
             title="Open Assistant"
           >
             <Mic className="w-5 h-5" />
@@ -455,7 +455,7 @@ function MainApp() {
             <button
               onClick={handleAcceptLocation}
               disabled={isRequestingLocation}
-              className="w-full py-3 px-6 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white text-sm font-bold shadow-lg shadow-sky-500/25 transition flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3 px-6 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white text-sm font-bold shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
             >
               {isRequestingLocation ? (
                 <span>{t.onboarding_locating}</span>
@@ -548,7 +548,7 @@ function MainApp() {
               </span>
               <button
                 onClick={handleCompleteLanguage}
-                className="px-6 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white text-xs font-bold shadow-md shadow-sky-500/20 transition flex items-center gap-1.5"
+                className="px-6 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white text-xs font-bold shadow-md shadow-sky-500/20 hover:shadow-sky-500/40 hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-1.5"
               >
                 <span>{t.onboarding_continue}</span>
                 <ArrowRight className="w-3.5 h-3.5" />

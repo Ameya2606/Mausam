@@ -1,7 +1,11 @@
 import type { Metadata, Viewport } from 'next';
+import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '../hooks/useLanguage';
 import { ThemeProvider } from '../hooks/useTheme';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
+const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
 export const metadata: Metadata = {
   title: 'VayuSync — Personalized Mausam Intelligence',
@@ -47,7 +51,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-screen antialiased bg-[#F4F8FB] dark:bg-[#060b13] text-[#0B1F33] dark:text-[#f8fafc] flex flex-col selection:bg-sky-500 selection:text-white transition-colors duration-200">
+      <body className={`${inter.variable} ${outfit.variable} font-sans min-h-screen antialiased text-[#0B1F33] dark:text-[#f8fafc] flex flex-col selection:bg-sky-500 selection:text-white transition-colors duration-200`}>
         <ThemeProvider>
           <LanguageProvider>
             {children}
