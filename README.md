@@ -58,27 +58,7 @@
    - One-click judge profile presets (*Commuter + Runner*, *Event Organizer + Travel*, *Krishi Mitra / Agriculture*).
    - 24-Hour timeline scrubber.
 
----
-
-## 2. Quick Start (One-Click Launch)
-
-### Option A: Windows One-Click Launcher (`start.bat`)
-Double-click `start.bat` in File Explorer, or run from command prompt:
-```bat
-start.bat
-```
-This automatically boots the FastAPI backend, launches the Next.js web application, and opens your default browser at **http://localhost:3000**.
-
-### Option B: Cross-Platform Python Launcher (`start.py`)
-Run from terminal:
-```bash
-python start.py
-```
-This runs both servers concurrently, monitors health, opens the browser, and cleanly terminates both processes upon `Ctrl+C`.
-
----
-
-## 3. Technology Stack
+## 2. Technology Stack
 
 - **Frontend**: Next.js 14 (App Router), React 18, TypeScript, Tailwind CSS, Lucide Icons, Framer Motion, IndexedDB (`idb`), Web Speech API.
 - **Backend**: Python 3.12, FastAPI, Pydantic v2, HTTPX, SQLAlchemy.
