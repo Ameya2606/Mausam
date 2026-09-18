@@ -19,8 +19,8 @@ import {
   Check,
   Mic,
   Sun,
-  Moon
-} from 'lucide-react';
+  Moon,
+  MoreHorizontal
 import { Location } from '../lib/types';
 import { useLanguage } from '../hooks/useLanguage';
 import { useTheme } from '../hooks/useTheme';
@@ -65,22 +65,25 @@ export const Header: React.FC<HeaderProps> = ({
   const { theme, setTheme, isDark } = useTheme();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [overflowOpen, setOverflowOpen] = useState(false);
   const [langSearch, setLangSearch] = useState('');
   const langDropdownRef = useRef<HTMLDivElement>(null);
+  const overflowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (langDropdownRef.current && !langDropdownRef.current.contains(e.target as Node)) {
         setLangDropdownOpen(false);
       }
+      if (overflowRef.current && !overflowRef.current.contains(e.target as Node)) {
+        setOverflowOpen(false);
+      }
     };
-    if (langDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [langDropdownOpen]);
+  }, []);
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-sky-100 dark:border-slate-800/80 glass-panel bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
@@ -331,37 +334,82 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </div>
 
-          {/* GPS Location */}
-          <button
-            onClick={onUseCurrentLocation}
-            className="p-1.5 sm:p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 transition shadow-sm active:scale-95"
-            title={t.nav_gps_location}
-          >
-            <Navigation className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          </button>
+          </div>
 
-          <button
-            onClick={onRefresh}
-            disabled={isLiveLoading}
-            className={`p-1.5 sm:p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 transition shadow-sm active:scale-95 ${
-              isLiveLoading ? 'animate-spin text-sky-600' : ''
-            }`}
-            title={t.nav_refresh}
-          >
-            <RefreshCw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-          </button>
-
-          {/* Voice Assistant Button */}
-          {onOpenAssistant && (
+          {/* Desktop Secondary Actions (Hidden under 1280px) */}
+          <div className="hidden xl:flex items-center gap-1.5">
+            {/* GPS Location */}
             <button
-              onClick={onOpenAssistant}
-              className="flex items-center gap-1 sm:gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-bold shadow-sm border border-slate-200 dark:border-slate-700 transition active:scale-95"
-              title={t.nav_voice_assistant}
+              onClick={onUseCurrentLocation}
+              className="p-1.5 sm:p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 transition shadow-sm active:scale-95"
+              title={t.nav_gps_location}
             >
-              <Mic className="w-3.5 h-3.5" />
-              <span className="hidden md:inline">{t.nav_voice_assistant}</span>
+              <Navigation className="w-4 h-4" />
             </button>
-          )}
+
+            {/* Refresh */}
+            <button
+              onClick={onRefresh}
+              disabled={isLiveLoading}
+              className={`p-1.5 sm:p-2 rounded-xl bg-white dark:bg-slate-900 hover:bg-sky-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 transition shadow-sm active:scale-95 ${
+                isLiveLoading ? 'animate-spin text-sky-600' : ''
+              }`}
+              title={t.nav_refresh}
+            >
+              <RefreshCw className="w-4 h-4" />
+            </button>
+
+            {/* Voice Assistant */}
+            {onOpenAssistant && (
+              <button
+                onClick={onOpenAssistant}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold shadow-sm border border-slate-200 dark:border-slate-700 transition active:scale-95"
+                title={t.nav_voice_assistant}
+              >
+                <Mic className="w-3.5 h-3.5" />
+                <span>{t.nav_voice_assistant}</span>
+              </button>
+            )}
+          </div>
+
+          {/* Mobile/Tablet Overflow Menu */}
+          <div className="relative xl:hidden" ref={overflowRef}>
+            <button
+              onClick={() => setOverflowOpen(!overflowOpen)}
+              className="p-1.5 sm:p-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 transition"
+              title="More Actions"
+            >
+              <MoreHorizontal className="w-4 h-4" />
+            </button>
+
+            {overflowOpen && (
+              <div className="absolute right-0 mt-2 w-48 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl z-50 py-2 flex flex-col">
+                <button
+                  onClick={() => { onUseCurrentLocation(); setOverflowOpen(false); }}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 w-full text-left"
+                >
+                  <Navigation className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                  {t.nav_gps_location || 'GPS Location'}
+                </button>
+                <button
+                  onClick={() => { onRefresh(); setOverflowOpen(false); }}
+                  className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 w-full text-left"
+                >
+                  <RefreshCw className={`w-4 h-4 text-sky-600 dark:text-sky-400 ${isLiveLoading ? 'animate-spin' : ''}`} />
+                  {t.nav_refresh || 'Refresh Data'}
+                </button>
+                {onOpenAssistant && (
+                  <button
+                    onClick={() => { onOpenAssistant(); setOverflowOpen(false); }}
+                    className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 w-full text-left"
+                  >
+                    <Mic className="w-4 h-4 text-purple-500" />
+                    {t.nav_voice_assistant || 'Voice Assistant'}
+                  </button>
+                )}
+              </div>
+            )}
+          </div>
 
           {/* Personalize Button (Visible on tablet/desktop, mobile uses bottom bar) */}
           <button
@@ -383,7 +431,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => onSelectSection('overview')}
             className={`px-3 py-1 rounded-lg transition whitespace-nowrap ${
-              activeSection === 'overview' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
+              activeSection === 'overview' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
             }`}
           >
             {t.nav_overview}
@@ -391,7 +439,7 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => onSelectSection('hourly')}
             className={`px-3 py-1 rounded-lg transition whitespace-nowrap ${
-              activeSection === 'hourly' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
+              activeSection === 'hourly' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
             }`}
           >
             {t.nav_hourly}
@@ -399,23 +447,23 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             onClick={() => onSelectSection('daily')}
             className={`px-3 py-1 rounded-lg transition whitespace-nowrap ${
-              activeSection === 'daily' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
+              activeSection === 'daily' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
             }`}
           >
             {t.nav_daily}
           </button>
           <button
-            onClick={() => onSelectSection('radar')}
+            onClick={() => onSelectSection('map')}
             className={`px-3 py-1 rounded-lg transition whitespace-nowrap ${
-              activeSection === 'radar' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
+              activeSection === 'map' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
             }`}
           >
-            {t.nav_radar}
+            {t.nav_map}
           </button>
           <button
             onClick={() => onSelectSection('warnings')}
             className={`px-3 py-1 rounded-lg transition whitespace-nowrap ${
-              activeSection === 'warnings' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
+              activeSection === 'warnings' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
             }`}
           >
             {t.nav_warnings}

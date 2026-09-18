@@ -184,8 +184,8 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                   <Droplets className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{t.metric_humidity}</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{curr.humidity}%</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 whitespace-normal break-words leading-tight">{t.metric_humidity}</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white whitespace-normal break-words leading-tight">{curr.humidity}%</p>
                 </div>
               </div>
 
@@ -194,8 +194,8 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                   <Wind className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{t.metric_wind}</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{curr.wind_speed} km/h</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 whitespace-normal break-words leading-tight">{t.metric_wind}</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white whitespace-normal break-words leading-tight">{curr.wind_speed} km/h</p>
                 </div>
               </div>
 
@@ -204,8 +204,8 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                   <Gauge className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{t.metric_pressure}</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{Math.round(curr.pressure)} hPa</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 whitespace-normal break-words leading-tight">{t.metric_pressure}</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white whitespace-normal break-words leading-tight">{Math.round(curr.pressure)} hPa</p>
                 </div>
               </div>
 
@@ -214,8 +214,8 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                   <Eye className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{t.metric_visibility}</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{curr.visibility} km</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 whitespace-normal break-words leading-tight">{t.metric_visibility}</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white whitespace-normal break-words leading-tight">{curr.visibility} km</p>
                 </div>
               </div>
 
@@ -224,8 +224,8 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                   <Sun className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{t.metric_uv}</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{curr.uv_index}</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 whitespace-normal break-words leading-tight">{t.metric_uv}</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white whitespace-normal break-words leading-tight">{curr.uv_index}</p>
                 </div>
               </div>
 
@@ -234,8 +234,8 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                   <CloudRain className="w-4 h-4" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{t.metric_rain}</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{curr.precipitation_probability}%</p>
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 whitespace-normal break-words leading-tight">{t.metric_rain}</p>
+                  <p className="text-sm font-bold text-slate-900 dark:text-white whitespace-normal break-words leading-tight">{curr.precipitation_probability}%</p>
                 </div>
               </div>
 

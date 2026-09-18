@@ -168,11 +168,21 @@ export const DetailedColorCodedGraphs: React.FC<DetailedColorCodedGraphsProps> =
   const chartW = width - paddingX * 2;
   const chartH = height - paddingTop - paddingBottom;
 
+  const formatTime = (timeStr: string) => {
+    try {
+      const date = new Date(timeStr);
+      if (isNaN(date.getTime())) return timeStr;
+      return date.toLocaleTimeString([], { hour: 'numeric', hour12: true });
+    } catch (e) {
+      return timeStr;
+    }
+  };
+
   const points = hours24.map((h, i) => {
     const x = paddingX + (i / (hours24.length - 1 || 1)) * chartW;
     const val = currentCfg.getValue(h);
     const y = paddingTop + chartH - (val / ceiling) * chartH;
-    return { x, y, val, hour: h.time, condition: h.condition_text };
+    return { x, y, val, hour: formatTime(h.time), rawTime: h.time, condition: h.condition_text };
   });
 
   const pathD = points.reduce((acc, p, i) => {

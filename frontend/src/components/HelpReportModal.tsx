@@ -27,8 +27,8 @@ import {
   Medal,
   UserCheck
 } from 'lucide-react';
-import { EmergencyContact, HelplineCategory, LeaderboardEntry, CurrentUserLeaderboardInfo } from '../lib/types';
-import { fetchEmergencyContacts, submitFeedback, submitIssueReport, fetchNationalLeaderboard } from '../lib/api';
+import { EmergencyContact, HelplineCategory } from '../lib/types';
+import { fetchEmergencyContacts, submitFeedback, submitIssueReport } from '../lib/api';
 import { useLanguage } from '../hooks/useLanguage';
 
 function getOrInitUserId(): string {
@@ -83,47 +83,12 @@ export const HelpReportModal: React.FC<HelpReportModalProps> = ({
   const [fbSuccessMsg, setFbSuccessMsg] = useState<string | null>(null);
   const [fbErrorMsg, setFbErrorMsg] = useState<string | null>(null);
 
-  // Feedback sub-tab and real-time National Leaderboard state
-  const [fbSubTab, setFbSubTab] = useState<'form' | 'leaderboard'>('form');
-  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>([]);
-  const [currentUserRankInfo, setCurrentUserRankInfo] = useState<CurrentUserLeaderboardInfo | null>(null);
-  const [isLoadingLeaderboard, setIsLoadingLeaderboard] = useState(false);
-  const [leaderboardError, setLeaderboardError] = useState<string | null>(null);
-  const [feedbackPointsResult, setFeedbackPointsResult] = useState<{
-    points_awarded?: number;
-    total_points?: number;
-    national_rank?: number;
-  } | null>(null);
-
   // Issue report form state
   const [issueCategory, setIssueCategory] = useState('Severe Weather Discrepancy');
   const [issueDesc, setIssueDesc] = useState('');
   const [issueSubmitting, setIssueSubmitting] = useState(false);
   const [issueSuccessTicket, setIssueSuccessTicket] = useState<string | null>(null);
   const [issueErrorMsg, setIssueErrorMsg] = useState<string | null>(null);
-
-  const loadLeaderboard = useCallback(async () => {
-    setIsLoadingLeaderboard(true);
-    setLeaderboardError(null);
-    try {
-      const uid = getOrInitUserId();
-      const res = await fetchNationalLeaderboard(uid);
-      setLeaderboardData(res.leaderboard || []);
-      setCurrentUserRankInfo(res.currentUser || null);
-    } catch (err: any) {
-      setLeaderboardError(err.message || 'Failed to load leaderboard');
-    } finally {
-      setIsLoadingLeaderboard(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    if (activeTab === 'feedback') {
-      loadLeaderboard();
-    }
-  }, [isOpen, activeTab, loadLeaderboard]);
-
   useEffect(() => {
     if (!isOpen) return;
 
@@ -178,7 +143,6 @@ export const HelpReportModal: React.FC<HelpReportModalProps> = ({
     setFbSubmitting(true);
     setFbErrorMsg(null);
     setFbSuccessMsg(null);
-    setFeedbackPointsResult(null);
 
     try {
       const uid = getOrInitUserId();
@@ -192,13 +156,7 @@ export const HelpReportModal: React.FC<HelpReportModalProps> = ({
         location: currentCity,
       });
       setFbSuccessMsg(res.message || 'Feedback recorded in VayuSync database!');
-      setFeedbackPointsResult({
-        points_awarded: res.points_awarded,
-        total_points: res.total_points,
-        national_rank: res.national_rank,
-      });
       setFbComment('');
-      loadLeaderboard();
     } catch (err: any) {
       setFbErrorMsg(err.message || 'Failed to submit feedback. Please try again.');
     } finally {

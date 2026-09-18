@@ -271,7 +271,7 @@ export const ShouldIEngine: React.FC<ShouldIEngineProps> = ({ weather, context, 
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div className="flex items-center gap-2.5">
               <span className={`px-3 py-1 rounded-lg text-xs font-black uppercase tracking-wider ${currentVerdict.badgeBg}`}>
-                {response.verdict === 'YES' ? t.should_i_verdict_yes : response.verdict === 'NO' ? t.should_i_verdict_no : response.verdict === 'CAUTION' ? t.should_i_verdict_caution : response.verdict}
+                Verdict: {response.verdict === 'YES' ? t.should_i_verdict_yes : response.verdict === 'NO' ? t.should_i_verdict_no : response.verdict === 'CAUTION' ? t.should_i_verdict_caution : response.verdict}
               </span>
               <span className="text-sm font-bold text-slate-900 dark:text-white">
                 {response.headline}

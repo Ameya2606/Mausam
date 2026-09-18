@@ -46,6 +46,16 @@ export const DetailedUVGraph: React.FC<DetailedUVGraphProps> = ({ hourly, curren
     return '< 10 mins (Urgent Protection)';
   };
 
+  const formatTime = (timeStr: string) => {
+    try {
+      const date = new Date(timeStr);
+      if (isNaN(date.getTime())) return timeStr;
+      return date.toLocaleTimeString([], { hour: 'numeric', hour12: true });
+    } catch (e) {
+      return timeStr;
+    }
+  };
+
   const peakCategory = getUVCategory(maxUV);
 
   // SVG Chart Geometry
@@ -62,7 +72,7 @@ export const DetailedUVGraph: React.FC<DetailedUVGraphProps> = ({ hourly, curren
     const x = paddingX + (i / (hours24.length - 1 || 1)) * chartW;
     const uv = Math.max(0, h.uv_index ?? 0);
     const y = paddingTop + chartH - (uv / ceilingUV) * chartH;
-    return { x, y, uv, hour: h.time, is_day: h.is_day };
+    return { x, y, uv, hour: formatTime(h.time), rawTime: h.time, is_day: h.is_day };
   });
 
   const pathD = points.reduce((acc, p, i) => {
@@ -119,7 +129,7 @@ export const DetailedUVGraph: React.FC<DetailedUVGraphProps> = ({ hourly, curren
             <div className="flex items-center gap-1.5 justify-end">
               <span className="text-lg font-black text-slate-900 dark:text-white">{maxUV.toFixed(1)}</span>
               <span className={`text-xs font-semibold px-2 py-0.5 rounded-md ${peakCategory.bg} ${peakCategory.color}`}>
-                {peakHour?.time || '13:00'} ({peakCategory.label})
+                at {peakHour ? formatTime(peakHour.time) : '1:00 PM'} ({peakCategory.label})
               </span>
             </div>
           </div>

@@ -38,7 +38,7 @@ export const LiveTelemetryBar: React.FC<LiveTelemetryBarProps> = ({
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
             </span>
-            <span className="font-bold tracking-wide text-slate-800 dark:text-slate-200">LIVE DATA AUDIT TELEMETRY</span>
+            <span className="font-bold tracking-wide text-slate-800 dark:text-slate-200">LIVE STATION TELEMETRY</span>
             <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-sky-50 dark:bg-sky-950/40 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/50 font-mono font-medium">
               {weather.provider}
             </span>
