@@ -9,6 +9,10 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.0
+      - key: WEATHER_PROVIDER
+        value: mock
+      - key: GEMINI_API_KEY
+        sync: false
     
   # ─── FRONTEND SERVICE (Next.js) ───
   - type: web

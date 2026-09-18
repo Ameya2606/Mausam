@@ -11,7 +11,7 @@ class Settings(BaseModel):
     DEBUG: bool = os.getenv("DEBUG", "true").lower() in ("true", "1")
     
     # Provider Settings
-    ACTIVE_PROVIDER: str = os.getenv("WEATHER_PROVIDER", "open_meteo")  # "open_meteo", "mock", "imd"
+    ACTIVE_PROVIDER: str = os.getenv("WEATHER_PROVIDER", "mock")  # "open_meteo", "mock", "imd"
     IMD_API_BASE_URL: str = os.getenv("IMD_API_BASE_URL", "https://mausam.imd.gov.in/api/v1")
     IMD_API_KEY: str = os.getenv("IMD_API_KEY", "")
     

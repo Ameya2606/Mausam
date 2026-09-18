@@ -9,6 +9,7 @@ from ..models.weather import WeatherResponse
 from ..models.user_context import UserContext
 from ..models.intelligence import IntelligenceSummary
 from ..services.weather_service import WeatherService, WeatherServiceError
+from ..core.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -824,6 +825,32 @@ class AIAssistantService:
                 reply = f"{loc} is currently {curr.temperature}°C (feels like {curr.feels_like}°C, {curr.condition_text}). Humidity is {curr.humidity}%, wind is {curr.wind_speed} km/h, and rain risk is {curr.precipitation_probability}%."
                 suggested_actions = ["What is the temperature right now?", "Will it rain today?", "How strong is the wind?"]
             structured_data = {"location": loc, "temperature": curr.temperature, "feels_like": curr.feels_like, "rain_prob": curr.precipitation_probability, "aqi": curr.aqi}
+
+        # ── 4. DYNAMIC LLM REWRITING (IF ENABLED) ─────────────────────────────
+        if settings.GEMINI_API_KEY:
+            try:
+                import google.generativeai as genai
+                genai.configure(api_key=settings.GEMINI_API_KEY)
+                model = genai.GenerativeModel('gemini-1.5-flash')
+                
+                prompt = f"""
+You are VayuSync Sahayak, a highly empathetic and concise AI weather assistant.
+The user asked: "{msg}"
+The active language is: {lang}
+The weather system generated this data-grounded response: "{reply}"
+
+Your task:
+Rewrite the weather system's response to be more conversational, natural, and intelligent.
+Keep it extremely concise (1-2 short sentences max).
+Do NOT hallucinate any numbers or facts that are not in the generated response.
+Do NOT use markdown bolding or bullet points. Just plain text.
+Respond ONLY with the rewritten text.
+"""
+                response = model.generate_content(prompt)
+                if response.text:
+                    reply = response.text.strip()
+            except Exception as e:
+                logger.error(f"[ASSISTANT] Gemini LLM generation failed: {e}")
 
         # Structured backend observability log
         logger.info(
