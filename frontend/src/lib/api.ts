@@ -502,7 +502,7 @@ export async function fetchEmergencyContacts(): Promise<{ emergency_numbers: Eme
         category: "Technical & Platform Support",
         contacts: [
           { title: "VayuSync Platform Desk", number: "support@vayusync.in", hours: "Email Response < 4 hrs" },
-          { title: "Smart India Hackathon Node #26076", number: "sih-support@mausam.gov.in", hours: "SIH Evaluation Desk" },
+          { title: "Mausam Help Desk", number: "support@mausam.gov.in", hours: "General Support" },
         ],
       },
     ],

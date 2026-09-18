@@ -204,8 +204,7 @@ def main():
 
     print("============================================================")
     print("MAUSAM (Powered by VayuSync Intelligence)")
-    print("Smart India Hackathon 2026")
-    print("Problem Statement ID: 26076")
+    print("VayuSync")
     print("============================================================")
     print()
 

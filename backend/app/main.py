@@ -11,7 +11,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(na
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description=(
-        "Personalized Mausam Intelligence Engine for SIH Problem Statement ID: 26076.\n\n"
+        "Personalized Mausam Intelligence Engine.\n\n"
         "Translates raw IMD / meteorological telemetry into personalized decisions, "
         "activity scores, proactive routine protection, and voice-assisted intelligence."
     ),
@@ -49,7 +49,6 @@ async def root():
     return {
         "project": settings.PROJECT_NAME,
         "version": "1.0.0",
-        "sih_problem_statement": "26076 - Development of Personalized Homepage for Mausam Mobile Application",
         "team": "VayuSync",
         "docs": "/docs",
         "status": "operational",

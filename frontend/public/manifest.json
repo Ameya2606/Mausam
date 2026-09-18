@@ -1,7 +1,7 @@
 {
   "name": "VayuSync — Personalized Mausam Intelligence",
   "short_name": "VayuSync",
-  "description": "Don't just tell me the weather. Tell me what the weather means for ME. Personalized Mausam Intelligence for SIH 2026.",
+  "description": "Don't just tell me the weather. Tell me what the weather means for ME. Personalized Mausam Intelligence.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#090d16",

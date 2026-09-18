@@ -1,5 +1,5 @@
 # Netlify Configuration for VayuSync — Personalized Mausam Intelligence
-# Problem Statement ID: 26076 (Smart India Hackathon 2026)
+# VayuSync
 
 [build]
   base = "frontend"

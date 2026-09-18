@@ -565,7 +565,7 @@ function MainApp() {
           <div>
             <strong className="text-slate-800 dark:text-white">MAUSAM</strong>
             <span className="mx-2 text-slate-300 dark:text-slate-600">|</span>
-            <span>Powered by VayuSync Intelligence (SIH #26076)</span>
+            <span>Powered by VayuSync Intelligence</span>
           </div>
           <div className="flex items-center gap-4 text-slate-500 dark:text-slate-400">
             <span>Dynamic Dual-Theme (Light / Dark)</span>

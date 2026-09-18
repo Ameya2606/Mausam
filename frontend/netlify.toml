@@ -1,5 +1,5 @@
 # Netlify Configuration for VayuSync Frontend (Subdirectory context)
-# Problem Statement ID: 26076 (Smart India Hackathon 2026)
+# VayuSync
 
 [build]
   command = "npm run build"

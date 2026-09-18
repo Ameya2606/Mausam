@@ -9,7 +9,7 @@ const outfit = Outfit({ subsets: ['latin'], variable: '--font-outfit' });
 
 export const metadata: Metadata = {
   title: 'VayuSync — Personalized Mausam Intelligence',
-  description: 'Smart India Hackathon 2026 Prototype (Problem ID: 26076). Next-generation personalized homepage for Mausam.',
+  description: 'Next-generation personalized homepage for Mausam.',
   manifest: '/manifest.json',
   icons: {
     icon: '/favicon.ico',

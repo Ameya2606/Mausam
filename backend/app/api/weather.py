@@ -75,7 +75,7 @@ async def reverse_geocode(
         async with httpx.AsyncClient(timeout=3.0) as client:
             res = await client.get(
                 f"https://nominatim.openstreetmap.org/reverse?format=json&lat={lat}&lon={lon}&zoom=10",
-                headers={"User-Agent": "MausamVayuSync/1.0 (SIH-2026-Hackathon)"},
+                headers={"User-Agent": "MausamVayuSync/1.0"},
             )
             if res.status_code == 200:
                 data = res.json()
