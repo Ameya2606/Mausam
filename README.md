@@ -1,10 +1,4 @@
 # MAUSAM (Powered by VayuSync Intelligence)
-
-> **Smart India Hackathon (SIH) 2026**  
-> **Problem Statement:** Development of Personalized Homepage for "Mausam" Mobile Application  
-> **Problem Statement ID:** 26076  
-> **Theme:** Smart Automation | **Category:** Software  
-
 ---
 
 ## 1. Product Architecture & Vision
