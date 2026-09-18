@@ -54,13 +54,6 @@ class ShouldIResponse(BaseModel):
     confidence: float
     data_points: Dict[str, str] = Field(default_factory=dict)
 
-class CommuteIntelligence(BaseModel):
-    traffic_delay_estimate_minutes: int
-    recommended_mode: str
-    two_wheeler_safety_index: int  # 0-100
-    metro_advantage: str
-    waterlogging_hotspots_alert: Optional[str] = None
-    commute_window_tip: str
 
 class KrishiIntelligence(BaseModel):
     spray_conditions: str          # Favorable, Unfavorable, Critical
@@ -154,7 +147,7 @@ class IntelligenceSummary(BaseModel):
     activities: List[ActivityScore]
     routine_impacts: List[RoutineWeatherImpact]
     calendar_conflicts: List[CalendarConflict] = Field(default_factory=list)
-    commute: Optional[CommuteIntelligence] = None
+
     krishi: Optional[KrishiIntelligence] = None
     health: Optional[HealthAQIIntelligence] = None
     event_planning: Optional[EventPlanningIntelligence] = None

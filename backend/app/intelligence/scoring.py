@@ -5,7 +5,6 @@ from ..models.intelligence import (
     MausamScore,
     MausamScoreBreakdown,
     ActivityScore,
-    CommuteIntelligence,
     KrishiIntelligence,
     HealthAQIIntelligence,
     SunlightWindow,
@@ -48,8 +47,6 @@ def calculate_mausam_score(weather: WeatherResponse, context: UserContext) -> Ma
             rain_penalty += 15
             
     if "rain" in context.priorities:
-        rain_penalty = int(rain_penalty * 1.3)
-    if "commute" in context.interests and context.preferred_transit == "two_wheeler":
         rain_penalty = int(rain_penalty * 1.3)
     if "events" in context.interests and rain_prob > 40:
         rain_penalty += 15
@@ -175,30 +172,6 @@ def calculate_activities(weather: WeatherResponse, context: UserContext) -> List
         icon_key="running",
     ))
 
-    # 2. Commute
-    bike_score = 90
-    bike_status = "Optimal"
-    if curr.precipitation_probability > 70 or curr.precipitation > 2.0:
-        bike_score -= 55
-        bike_status = "High Risk"
-        bike_rec = "Waterlogging and slick road risks. Metro or cab strongly recommended."
-    elif curr.wind_speed > 35:
-        bike_score -= 35
-        bike_status = "Caution"
-        bike_rec = f"Strong wind gusts ({curr.wind_speed} km/h). Ride cautiously over bridges."
-    else:
-        bike_rec = "Manageable road conditions. Favorable for daily travel."
-
-    activities.append(ActivityScore(
-        name="Daily Commute & Travel",
-        category="commute",
-        score=max(5, min(100, bike_score)),
-        status=bike_status,
-        best_time="08:00 AM - 09:30 AM",
-        recommendation=bike_rec,
-        icon_key="bike",
-    ))
-
     # 3. Outdoor Event
     event_score = 90
     event_status = "Optimal"
@@ -248,37 +221,6 @@ def calculate_activities(weather: WeatherResponse, context: UserContext) -> List
     ))
 
     return activities
-
-def calculate_commute_intelligence(weather: WeatherResponse, context: UserContext) -> CommuteIntelligence:
-    curr = weather.current
-    rain_prob = curr.precipitation_probability
-    
-    delays = 0
-    if rain_prob > 70 or curr.precipitation > 5:
-        delays = 25
-        rec_mode = "Metro / Suburban Rail"
-        hotspots = "Underpasses and low-lying bottleneck junctions vulnerable to water stagnation."
-    elif rain_prob > 40:
-        delays = 10
-        rec_mode = "Public Transit or Car"
-        hotspots = "Wet road surfaces. Minor deceleration expected."
-    else:
-        delays = 0
-        rec_mode = "Two-Wheeler / Personal Vehicle"
-        hotspots = None
-
-    two_wheeler_index = max(10, 100 - (delays * 3) - (int(curr.wind_speed * 0.8)))
-    metro_adv = "Completely immune to rain stagnation, road gridlocks, and waterlogging delays."
-    tip = f"Depart {delays + 10} mins early to avoid weather-induced transit bottlenecks." if delays > 0 else "Normal road conditions. Standard commute time adequate."
-
-    return CommuteIntelligence(
-        traffic_delay_estimate_minutes=delays,
-        recommended_mode=rec_mode,
-        two_wheeler_safety_index=two_wheeler_index,
-        metro_advantage=metro_adv,
-        waterlogging_hotspots_alert=hotspots,
-        commute_window_tip=tip,
-    )
 
 def calculate_krishi_intelligence(weather: WeatherResponse) -> KrishiIntelligence:
     curr = weather.current

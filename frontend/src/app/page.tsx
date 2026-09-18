@@ -39,12 +39,10 @@ const todayDateString = new Date().toISOString().split('T')[0];
 const DEFAULT_USER_CONTEXT: UserContext = {
   name: 'Ameya',
   is_personalized: false,
-  interests: ['commute', 'running'],
+  interests: ['health', 'running'],
   priorities: ['rain', 'heat', 'aqi'],
-  preferred_transit: 'two_wheeler',
   calendar_events: [
     { id: 'ev-1', title: 'Morning Run / Jog', date: todayDateString, start_hour: 6, end_hour: 7, is_outdoor: true },
-    { id: 'ev-2', title: 'Daily Office Commute', date: todayDateString, start_hour: 8, end_hour: 10, is_outdoor: true },
   ],
 };
 

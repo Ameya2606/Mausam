@@ -6,7 +6,6 @@ from ..models.intelligence import IntelligenceSummary, ShouldIResponse
 from ..intelligence.scoring import (
     calculate_mausam_score,
     calculate_activities,
-    calculate_commute_intelligence,
     calculate_krishi_intelligence,
     calculate_health_intelligence,
     calculate_event_planning_intelligence,
@@ -45,7 +44,6 @@ async def get_intelligence_summary(req: SummaryRequest):
     activities = calculate_activities(w, c)
     routine_impacts = analyze_routine_impacts(w, c)
     calendar_conflicts = detect_calendar_conflicts(w, c)
-    commute = calculate_commute_intelligence(w, c)
     krishi = calculate_krishi_intelligence(w)
     health = calculate_health_intelligence(w, c)
     event_planning = calculate_event_planning_intelligence(w)
@@ -77,7 +75,6 @@ async def get_intelligence_summary(req: SummaryRequest):
         activities=activities,
         routine_impacts=routine_impacts,
         calendar_conflicts=calendar_conflicts,
-        commute=commute,
         krishi=krishi,
         health=health,
         event_planning=event_planning,

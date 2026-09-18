@@ -5,9 +5,7 @@ from ..models.intelligence import RoutineWeatherImpact
 
 DEFAULT_SCHEDULE = [
     CalendarEvent(id="c1", title="Morning Run / Walk", start_hour=6, end_hour=7, is_outdoor=True),
-    CalendarEvent(id="c2", title="Morning Commute", start_hour=8, end_hour=10, is_outdoor=True),
     CalendarEvent(id="c3", title="Work / Study (Indoor)", start_hour=10, end_hour=17, is_outdoor=False),
-    CalendarEvent(id="c4", title="Evening Commute & Transit", start_hour=17, end_hour=19, is_outdoor=True),
     CalendarEvent(id="c5", title="Evening Outdoor Recreation", start_hour=19, end_hour=21, is_outdoor=True),
 ]
 

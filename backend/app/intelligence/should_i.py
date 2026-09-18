@@ -77,28 +77,6 @@ def evaluate_should_i(query: str, weather: WeatherResponse, context: UserContext
                 data_points={"Rain Probability": f"{rain_prob}%", "UV Index": str(curr.uv_index)},
             )
 
-    # Two-wheeler / Bike commute query
-    if any(w in q for w in ["bike", "motorcycle", "two wheeler", "scooter", "ride"]):
-        if rain_prob >= 65 or curr.wind_speed > 35:
-            return ShouldIResponse(
-                query=query,
-                verdict="NO",
-                headline="Take Metro, bus, or cab instead of two-wheeler.",
-                reason=f"Hazardous riding conditions: Rain probability {rain_prob}%, wind gusts {curr.wind_gust or curr.wind_speed} km/h, and waterlogging risk.",
-                tip="Flyovers and low underpasses will have high crosswinds and slick road friction.",
-                confidence=0.92,
-                data_points={"Rain Probability": f"{rain_prob}%", "Wind Gusts": f"{curr.wind_gust or curr.wind_speed} km/h"},
-            )
-        else:
-            return ShouldIResponse(
-                query=query,
-                verdict="YES",
-                headline="Safe to ride your two-wheeler today.",
-                reason="Road surfaces are dry, visibility is adequate, and wind speeds are within safe handling limits.",
-                tip="Wear an ISI-certified helmet with clean visor and maintain routine lane discipline.",
-                confidence=0.90,
-                data_points={"Visibility": f"{curr.visibility} km", "Wind Speed": f"{curr.wind_speed} km/h"},
-            )
 
     # Running / Outdoor workout query
     if any(w in q for w in ["run", "workout", "exercise", "jog", "walk", "marathon"]):

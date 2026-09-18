@@ -45,7 +45,7 @@ export const PersonalizationModal: React.FC<PersonalizationModalProps> = ({
   const [stage, setStage] = useState<'general' | 'role_questions'>('general');
 
   const INTEREST_OPTIONS = [
-    { id: 'commute', label: t.role_commute_title, desc: t.role_commute_desc, icon: Briefcase },
+
     { id: 'running', label: t.role_running_title, desc: t.role_running_desc, icon: Activity },
     { id: 'travel', label: t.role_travel_title, desc: t.role_travel_desc, icon: Compass },
     { id: 'family', label: t.role_family_title, desc: t.role_family_desc, icon: Users },
@@ -73,33 +73,23 @@ export const PersonalizationModal: React.FC<PersonalizationModalProps> = ({
     { id: 'UV Radiation', label: t.sensitivity_uv },
   ];
 
-  const TRANSIT_OPTIONS = [
-    { id: 'two_wheeler', label: t.transit_two_wheeler },
-    { id: 'four_wheeler', label: t.transit_four_wheeler },
-    { id: 'public', label: t.transit_public },
-    { id: 'walking', label: t.transit_walking },
-  ];
+
 
   const validInitialInterests = (context.interests || ['commute', 'running']).filter(
     (i) => i !== 'cycling' && i !== 'events'
   );
 
   const [selectedInterests, setSelectedInterests] = useState<string[]>(
-    validInitialInterests.length > 0 ? validInitialInterests.slice(0, 3) : ['commute']
+    validInitialInterests.length > 0 ? validInitialInterests.slice(0, 3) : ['health']
   );
   const [selectedPriorities, setSelectedPriorities] = useState<string[]>(context.priorities || ['rain', 'heat']);
   const [selectedSensitivities, setSelectedSensitivities] = useState<string[]>(context.sensitivities || ['Dust', 'Air Pollution']);
-  const [preferredTransit, setPreferredTransit] = useState(context.preferred_transit || 'two_wheeler');
+
   const [events, setEvents] = useState<CalendarEvent[]>(context.calendar_events || []);
   
   const [warningMessage, setWarningMessage] = useState<string | null>(null);
 
-  const [commuteTiming, setCommuteTiming] = useState(
-    context.role_details?.commute?.office_timing || '09:30 AM - 06:30 PM'
-  );
-  const [commuteLocation, setCommuteLocation] = useState(
-    context.role_details?.commute?.office_location || ''
-  );
+
 
   const [runnerTimeOfDay, setRunnerTimeOfDay] = useState<'Morning' | 'Evening'>(
     context.role_details?.running?.time_of_day || 'Morning'
@@ -220,12 +210,7 @@ export const PersonalizationModal: React.FC<PersonalizationModalProps> = ({
   const handleFinalSaveAndApply = () => {
     setWarningMessage(null);
 
-    if (selectedInterests.includes('commute')) {
-      if (!commuteTiming.trim() || !commuteLocation.trim()) {
-        setWarningMessage(t.pers_warning_commute_fields);
-        return;
-      }
-    }
+
 
     if (selectedInterests.includes('running')) {
       if (!runnerTime.trim()) {
@@ -243,9 +228,7 @@ export const PersonalizationModal: React.FC<PersonalizationModalProps> = ({
 
 
     const updatedRoleDetails: UserRoleDetails = {
-      commute: selectedInterests.includes('commute')
-        ? { office_timing: commuteTiming, office_location: commuteLocation }
-        : undefined,
+
       running: selectedInterests.includes('running')
         ? { time_of_day: runnerTimeOfDay, running_time: runnerTime }
         : undefined,
@@ -275,7 +258,7 @@ export const PersonalizationModal: React.FC<PersonalizationModalProps> = ({
       interests: selectedInterests,
       priorities: selectedPriorities,
       sensitivities: selectedSensitivities,
-      preferred_transit: preferredTransit,
+
       calendar_events: events,
       role_details: updatedRoleDetails,
     });
@@ -422,28 +405,7 @@ export const PersonalizationModal: React.FC<PersonalizationModalProps> = ({
                 </div>
               </div>
 
-              {/* Section 4: Transit Preference */}
-              <div className="space-y-2">
-                <label className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
-                  {t.pers_transit_heading}
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {TRANSIT_OPTIONS.map((opt) => (
-                    <button
-                      key={opt.id}
-                      type="button"
-                      onClick={() => setPreferredTransit(opt.id)}
-                      className={`px-3 py-1.5 rounded-xl border text-xs font-semibold capitalize transition ${
-                        preferredTransit === opt.id
-                          ? 'bg-indigo-600 border-indigo-600 text-white shadow-xs font-bold'
-                          : 'bg-slate-50/80 dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-indigo-300 dark:hover:border-indigo-600 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 hover:text-slate-900 dark:hover:text-white'
-                      }`}
-                    >
-                      {opt.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
+
             </>
           ) : (
             /* STAGE 2: ROLE-SPECIFIC QUESTIONS */
@@ -455,41 +417,7 @@ export const PersonalizationModal: React.FC<PersonalizationModalProps> = ({
                 </span>
               </div>
 
-              {/* 1. Daily Commute Role */}
-              {selectedInterests.includes('commute') && (
-                <div className="p-4 rounded-2xl bg-slate-50/80 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 space-y-3.5">
-                  <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 font-bold text-xs uppercase tracking-wider">
-                    <Briefcase className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-                    <span>{t.pers_commute_heading}</span>
-                  </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                    <div>
-                      <label className="text-slate-600 dark:text-slate-400 block mb-1 font-medium flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" /> {t.pers_office_timing_label} <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={commuteTiming}
-                        onChange={(e) => setCommuteTiming(e.target.value)}
-                        placeholder={t.pers_office_timing_placeholder}
-                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="text-slate-600 dark:text-slate-400 block mb-1 font-medium flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400" /> {t.pers_office_location_label} <span className="text-rose-500">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        value={commuteLocation}
-                        onChange={(e) => setCommuteLocation(e.target.value)}
-                        placeholder={t.pers_office_location_placeholder}
-                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
+
 
               {/* 2. Runner / Fitness Role */}
               {selectedInterests.includes('running') && (

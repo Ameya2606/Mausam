@@ -4,12 +4,10 @@ import {
   UserContext, 
   ShouldIResponse, 
   PersonaType, 
-  TransitMode,
   MausamScore,
   ActivityScore,
   RoutineWeatherImpact,
   CalendarConflict,
-  CommuteIntelligence,
   HealthAQIIntelligence,
   EmergencyContact,
   HelplineCategory,
@@ -788,14 +786,7 @@ function getFallbackIntelligence(weather: WeatherResponse, context: UserContext)
       };
     });
 
-  const commute: CommuteIntelligence = {
-    traffic_delay_estimate_minutes: isFinite(rainPenalty) && rainPenalty > 0 ? 15 : 0,
-    recommended_mode: context.preferred_transit || 'two_wheeler',
-    two_wheeler_safety_index: 78,
-    metro_advantage: 'Metro recommended for 17:00 - 19:00 to bypass rain congestion.',
-    waterlogging_hotspots_alert: null,
-    commute_window_tip: 'Morning commute is completely clear. Plan evening departure before 16:30.',
-  };
+
 
   const health: HealthAQIIntelligence = {
     health_index: 85,
@@ -820,7 +811,6 @@ function getFallbackIntelligence(weather: WeatherResponse, context: UserContext)
     activities,
     routine_impacts,
     calendar_conflicts,
-    commute,
     health,
     event_planning: {
       sunlight: {

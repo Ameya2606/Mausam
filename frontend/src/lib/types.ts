@@ -1,5 +1,4 @@
 export type PersonaType = string;
-export type TransitMode = string;
 
 export interface Location {
   name: string;
@@ -128,10 +127,6 @@ export interface ActivityConfig {
 }
 
 export interface UserRoleDetails {
-  commute?: {
-    office_timing: string;
-    office_location: string;
-  };
   running?: {
     time_of_day: 'Morning' | 'Evening';
     running_time: string;
@@ -166,7 +161,6 @@ export interface UserContext {
   is_personalized: boolean;
   interests: string[];        // selected roles
   priorities: string[];       // ["rain", "heat", "aqi", "uv", "wind", "cold"]
-  preferred_transit: string;  // "two_wheeler", "metro", "car", "bus", "walking"
   sensitivities?: string[];   // ["pollen", "dust", "air_pollution", "humidity", "heat", "uv"]
   persona?: string;
   activities?: ActivityConfig[];
@@ -233,14 +227,6 @@ export interface ShouldIResponse {
   data_points: Record<string, string>;
 }
 
-export interface CommuteIntelligence {
-  traffic_delay_estimate_minutes: number;
-  recommended_mode: string;
-  two_wheeler_safety_index: number;
-  metro_advantage: string;
-  waterlogging_hotspots_alert?: string | null;
-  commute_window_tip: string;
-}
 
 export interface KrishiIntelligence {
   spray_conditions: string;
@@ -414,7 +400,6 @@ export interface IntelligenceSummary {
   activities: ActivityScore[];
   routine_impacts: RoutineWeatherImpact[];
   calendar_conflicts: CalendarConflict[];
-  commute?: CommuteIntelligence | null;
   krishi?: KrishiIntelligence | null;
   health?: HealthAQIIntelligence | null;
   event_planning?: EventPlanningIntelligence | null;

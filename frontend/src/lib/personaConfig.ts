@@ -39,42 +39,14 @@ export interface PersonaDefinition {
   };
   scheduleLabel: string;
   scheduleDescription: string;
-  primaryModuleId: 'travel' | 'fitness' | 'health' | 'event' | 'krishi' | 'commute' | 'family' | 'beach';
+  primaryModuleId: 'travel' | 'fitness' | 'health' | 'event' | 'krishi' | 'family' | 'beach';
   priorityMetrics: string[];
   decisionQuestions: DecisionQuestion[];
   quickRecommendations: string[];
 }
 
 export const PERSONA_CONFIG: Record<string, PersonaDefinition> = {
-  commute: {
-    id: 'commute',
-    title: 'Daily Commute Intelligence',
-    shortTitle: 'Commuter',
-    subtitle: 'Weather and transit conditions optimized for your daily commute.',
-    icon: Briefcase,
-    themeColor: {
-      bg: 'bg-sky-50 dark:bg-sky-950/40',
-      border: 'border-sky-200 dark:border-sky-800/60',
-      text: 'text-sky-700 dark:text-sky-300',
-      badge: 'bg-sky-100 dark:bg-sky-900/50 text-sky-800 dark:text-sky-200 border-sky-200 dark:border-sky-700/60',
-    },
-    scheduleLabel: 'Your Commute Today',
-    scheduleDescription: 'Peak traffic timing, transit delay estimates & weather window',
-    primaryModuleId: 'commute',
-    priorityMetrics: ['visibility', 'rain', 'wind', 'temperature'],
-    decisionQuestions: [
-      { text: "Should I carry an umbrella?", icon: Umbrella, category: "commute" },
-      { text: "Is it safe to ride my bike?", icon: Bike, category: "commute" },
-      { text: "Will rain affect my commute?", icon: CloudRain, category: "commute" },
-      { text: "What is the best time to leave?", icon: Car, category: "commute" },
-      { text: "Is visibility suitable for commuting?", icon: Eye, category: "commute" },
-    ],
-    quickRecommendations: [
-      "Leave 15 minutes early during high rain risk windows.",
-      "Use metro or covered transit if road traction is low.",
-      "Carry rain protection for evening return commute."
-    ],
-  },
+
   running: {
     id: 'running',
     title: 'Outdoor Fitness Intelligence',
@@ -519,12 +491,7 @@ export const LOCALIZED_DECISION_QUESTIONS: Record<string, Record<string, string>
 };
 
 export const LOCALIZED_SCHEDULES: Record<string, Record<string, { label: string; desc: string }>> = {
-  commute: {
-    hi: { label: "आपकी आज की यात्रा", desc: "पीक ट्रैफिक समय, देरी का अनुमान और मौसम विंडो" },
-    mr: { label: "तुमचा आजचा प्रवास", desc: "वाहतूक कोंडीची वेळ, विलंबाचा अंदाज आणि हवामान" },
-    bn: { label: "আপনার আজকের যাতায়াত", desc: "শীর্ষ ট্রাফিকের সময়, বিলম্বের পূর্বাভাস এবং আবহাওয়া" },
-    te: { label: "ఈరోజు మీ ప్రయాణం", desc: "ట్రాఫిక్ వేళలు, ఆలస్య అంచనాలు మరియు వాతావరణం" },
-  },
+
   running: {
     hi: { label: "आपकी फिटनेस मौसम विंडो", desc: "दौड़ने और व्यायाम के लिए सर्वश्रेष्ठ समय" },
     mr: { label: "तुमची तंदुरुस्ती हवामान वेळ", desc: "बाहेर धावण्यासाठी आणि सरावासाठी सर्वोत्तम तास" },
@@ -570,7 +537,7 @@ export const LOCALIZED_SCHEDULES: Record<string, Record<string, { label: string;
 };
 
 export function getPersonaConfig(personaId: string, language?: string): PersonaDefinition {
-  const base = PERSONA_CONFIG[personaId] || PERSONA_CONFIG.commute;
+  const base = PERSONA_CONFIG[personaId] || PERSONA_CONFIG.health;
   if (!language || language === 'en') return base;
 
   const locSched = LOCALIZED_SCHEDULES[personaId]?.[language];
@@ -587,7 +554,7 @@ export function getPersonaConfig(personaId: string, language?: string): PersonaD
 
 export function getPersonaQuestionsForRoles(activeRoleIds: string[], language?: string): DecisionQuestion[] {
   if (!activeRoleIds || activeRoleIds.length === 0) {
-    return getPersonaConfig('commute', language).decisionQuestions;
+    return getPersonaConfig('health', language).decisionQuestions;
   }
   const questions: DecisionQuestion[] = [];
   const seenTexts = new Set<string>();
@@ -604,5 +571,5 @@ export function getPersonaQuestionsForRoles(activeRoleIds: string[], language?: 
     }
   }
 
-  return questions.length > 0 ? questions : getPersonaConfig('commute', language).decisionQuestions;
+  return questions.length > 0 ? questions : getPersonaConfig('health', language).decisionQuestions;
 }

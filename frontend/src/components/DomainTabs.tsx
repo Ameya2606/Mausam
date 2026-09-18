@@ -11,7 +11,6 @@ import {
   Clock, 
   Bike, 
   Car, 
-  TrainFront, 
   Droplet, 
   Wind, 
   Sun,
@@ -42,12 +41,10 @@ export const DomainTabs: React.FC<DomainTabsProps> = ({
     if (context.interests?.includes('gardening')) return 'krishi';
     if (context.interests?.includes('running') || context.interests?.includes('health')) return 'health';
     if (context.interests?.includes('beach')) return 'marine';
-    return 'commute';
+    return 'activities';
   };
 
-  const [activeTab, setActiveTab] = useState<'commute' | 'krishi' | 'health' | 'marine' | 'activities'>(getInitialTab());
-
-  const commute = intelligence.commute;
+  const [activeTab, setActiveTab] = useState<'krishi' | 'health' | 'marine' | 'activities'>(getInitialTab());
   const krishi = intelligence.krishi;
   const health = intelligence.health;
   const marine = weather.marine;
@@ -57,18 +54,6 @@ export const DomainTabs: React.FC<DomainTabsProps> = ({
     <section className="w-full rounded-2xl glass-panel p-5 sm:p-6 space-y-5 border border-sky-100 dark:border-slate-800/80 bg-white/70 dark:bg-slate-900/70 shadow-sm">
       {/* Tab Navigation Buttons */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 border-b border-sky-100 dark:border-slate-800">
-        <button
-          onClick={() => setActiveTab('commute')}
-          className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${
-            activeTab === 'commute'
-              ? 'bg-sky-600 text-white shadow-md shadow-sky-500/20'
-              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800'
-          }`}
-        >
-          <Briefcase className="w-4 h-4" />
-          <span>{t.role_commute_title}</span>
-        </button>
-
         <button
           onClick={() => setActiveTab('krishi')}
           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition whitespace-nowrap ${
@@ -119,56 +104,6 @@ export const DomainTabs: React.FC<DomainTabsProps> = ({
           </button>
         )}
       </div>
-
-      {/* Tab Content: Commute */}
-      {activeTab === 'commute' && commute && (
-        <div className="space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs">
-              <p className="text-xs text-slate-500 dark:text-slate-400">Recommended Transit Mode</p>
-              <p className="text-base font-bold text-slate-900 dark:text-white mt-1 flex items-center gap-2">
-                <TrainFront className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-                {commute.recommended_mode}
-              </p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                {commute.metro_advantage}
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs">
-              <p className="text-xs text-slate-500 dark:text-slate-400">Weather-Induced Traffic Delay</p>
-              <p className="text-base font-bold text-amber-700 dark:text-amber-400 mt-1">
-                +{commute.traffic_delay_estimate_minutes} Minutes
-              </p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                {commute.commute_window_tip}
-              </p>
-            </div>
-
-            <div className="p-4 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs">
-              <p className="text-xs text-slate-500 dark:text-slate-400">Two-Wheeler Safety Score</p>
-              <p className={`text-base font-bold mt-1 ${
-                commute.two_wheeler_safety_index > 70 ? 'text-emerald-700 dark:text-emerald-400' : 'text-rose-700 dark:text-rose-400'
-              }`}>
-                {commute.two_wheeler_safety_index} / 100
-              </p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                {commute.two_wheeler_safety_index > 70 ? 'Optimal riding conditions' : 'Slippery roads & reduced traction'}
-              </p>
-            </div>
-          </div>
-
-          {commute.waterlogging_hotspots_alert && (
-            <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/50 flex items-start gap-3 shadow-xs">
-              <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
-              <p className="text-xs text-amber-900 dark:text-amber-300">
-                <strong>Waterlogging Hotspots Warning: </strong>
-                {commute.waterlogging_hotspots_alert}
-              </p>
-            </div>
-          )}
-        </div>
-      )}
 
       {/* Tab Content: Krishi Mausam */}
       {activeTab === 'krishi' && krishi && (

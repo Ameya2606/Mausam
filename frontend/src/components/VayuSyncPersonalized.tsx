@@ -38,7 +38,7 @@ import { DomainTabs } from './DomainTabs';
 import { AllergyOutlookCard } from './AllergyOutlookCard';
 import { EventPlannerCard } from './EventPlannerCard';
 import { VisibilityCard } from './VisibilityCard';
-import { CommuteIntelligenceCard } from './CommuteIntelligenceCard';
+
 import { TravelIntelligenceCard } from './TravelIntelligenceCard';
 import { FitnessIntelligenceCard } from './FitnessIntelligenceCard';
 import { FamilyIntelligenceCard } from './FamilyIntelligenceCard';
@@ -160,8 +160,7 @@ export const VayuSyncPersonalized: React.FC<VayuSyncPersonalizedProps> = ({
         return roleDetails?.travel?.frequent_destination 
           ? `Route: ${roleDetails.travel.frequent_destination} (${roleDetails.travel.travel_type || 'Highway'})` 
           : `Travel Corridor: ${weather.location.name} Region`;
-      case 'commute':
-        return `${roleDetails?.commute?.office_timing || '09:30 AM - 06:30 PM'} • ${roleDetails?.commute?.office_location || weather.location.name}`;
+
       case 'running':
         return `${roleDetails?.running?.time_of_day || 'Morning'} Run at ${roleDetails?.running?.running_time || '06:00 AM'}`;
       case 'gardening':
@@ -327,8 +326,6 @@ export const VayuSyncPersonalized: React.FC<VayuSyncPersonalizedProps> = ({
             switch (activePersonaId) {
               case 'travel':
                 return <TravelIntelligenceCard key={activePersonaId} weather={weather} intelligence={intelligence} context={context} />;
-              case 'commute':
-                return <CommuteIntelligenceCard key={activePersonaId} weather={weather} intelligence={intelligence} context={context} />;
               case 'running':
                 return <FitnessIntelligenceCard key={activePersonaId} weather={weather} intelligence={intelligence} context={context} />;
               case 'family':
@@ -342,7 +339,7 @@ export const VayuSyncPersonalized: React.FC<VayuSyncPersonalizedProps> = ({
               case 'event_planning':
                 return <EventPlannerIntelligenceCard key={activePersonaId} weather={weather} intelligence={intelligence} context={context} />;
               default:
-                return <CommuteIntelligenceCard key={activePersonaId} weather={weather} intelligence={intelligence} context={context} />;
+                return null;
             }
           })()}
 

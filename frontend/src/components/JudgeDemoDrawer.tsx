@@ -60,13 +60,12 @@ const DEMO_SCENARIOS = [
 
 const DEMO_PROFILES = [
   {
-    name: 'Commuter + Morning Runner',
-    desc: 'Interested in daily transit, two-wheeler, running',
+    name: 'Health + Morning Runner',
+    desc: 'Interested in health and running',
     context: {
-      name: 'Ameya (Commuter/Runner)',
-      interests: ['commute', 'running', 'health'],
+      name: 'Ameya (Health/Runner)',
+      interests: ['health', 'running'],
       priorities: ['rain', 'aqi'],
-      preferred_transit: 'two_wheeler',
       is_personalized: true,
     },
   },
@@ -77,7 +76,6 @@ const DEMO_PROFILES = [
       name: 'Ameya (Event Planner)',
       interests: ['events', 'travel', 'family'],
       priorities: ['rain', 'wind', 'heat'],
-      preferred_transit: 'car',
       is_personalized: true,
     },
   },
@@ -88,7 +86,6 @@ const DEMO_PROFILES = [
       name: 'Ameya (Krishi Mitra)',
       interests: ['gardening', 'family'],
       priorities: ['rain', 'wind', 'heat'],
-      preferred_transit: 'two_wheeler',
       is_personalized: true,
     },
   },
