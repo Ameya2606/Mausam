@@ -70,7 +70,7 @@ export const RainViewerRadarMap: React.FC<RainViewerRadarMapProps> = ({
     const s = subdomains[Math.abs(x + y) % subdomains.length];
     
     if (baseMapType === 'satellite') {
-      return `https://mt${(x + y) % 4}.google.com/vt/lyrs=y&x=${x}&y=${y}&z=${z}`;
+      return `https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}`;
     }
     
     if (isDark) {

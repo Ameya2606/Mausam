@@ -638,13 +638,16 @@ export const PersonalizationModal: React.FC<PersonalizationModalProps> = ({
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div>
                       <label className="text-slate-600 dark:text-slate-400 block mb-1 font-medium">{t.pers_crop_label}</label>
-                      <input
-                        type="text"
+                      <select
                         value={gardeningCrop}
                         onChange={(e) => setGardeningCrop(e.target.value)}
-                        placeholder={t.pers_crop_placeholder}
-                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
-                      />
+                        className="w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-slate-900 dark:text-white focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500"
+                      >
+                        <option value="Vegetables & Herbs">Vegetables & Herbs</option>
+                        <option value="Flowers & Ornamentals">Flowers & Ornamentals</option>
+                        <option value="Orchards & Fruit Trees">Orchards & Fruit Trees</option>
+                        <option value="Field Crops & Grains">Field Crops & Grains</option>
+                      </select>
                     </div>
                     <div>
                       <label className="text-slate-600 dark:text-slate-400 block mb-1 font-medium">{t.pers_watering_label}</label>

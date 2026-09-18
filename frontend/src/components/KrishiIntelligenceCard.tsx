@@ -27,6 +27,7 @@ export const KrishiIntelligenceCard: React.FC<KrishiIntelligenceCardProps> = ({
   context,
 }) => {
   const { t, language } = useLanguage();
+  const [activeTab, setActiveTab] = React.useState<'overview' | 'crops'>('overview');
   const curr = weather.current;
   const loc = weather.location;
   const roleDetails = context.role_details?.gardening;
@@ -127,8 +128,27 @@ export const KrishiIntelligenceCard: React.FC<KrishiIntelligenceCardProps> = ({
         </div>
       </div>
 
-      {/* ── 2. CONTEXT INFORMATION ROW ─────────────────────────────────────── */}
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-600 dark:text-slate-300 bg-slate-50/80 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700">
+      {/* ── 1.5. TAB SWITCHER ───────────────────────────────────────────── */}
+      <div className="flex gap-6 border-b border-slate-100 dark:border-slate-800 pb-px">
+        <button 
+          onClick={() => setActiveTab('overview')}
+          className={`pb-3 text-sm font-semibold transition-colors border-b-2 ${activeTab === 'overview' ? 'text-emerald-600 border-emerald-600' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 border-transparent hover:border-slate-300 dark:hover:border-slate-600'}`}
+        >
+          Daily Operations
+        </button>
+        <button 
+          onClick={() => setActiveTab('crops')}
+          className={`pb-3 text-sm font-semibold transition-colors border-b-2 ${activeTab === 'crops' ? 'text-emerald-600 border-emerald-600' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 border-transparent hover:border-slate-300 dark:hover:border-slate-600'}`}
+        >
+          Crop Recommendations
+        </button>
+      </div>
+
+      {/* ── OVERVIEW TAB ─────────────────────────────────────── */}
+      {activeTab === 'overview' && (
+        <div className="space-y-6">
+          {/* ── 2. CONTEXT INFORMATION ROW ─────────────────────────────────────── */}
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-slate-600 dark:text-slate-300 bg-slate-50/80 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700">
         <div className="flex items-center gap-1.5">
           <MapPin className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
           <span className="text-slate-500 dark:text-slate-400">{t.krishi_location}</span>
@@ -231,10 +251,16 @@ export const KrishiIntelligenceCard: React.FC<KrishiIntelligenceCardProps> = ({
         </div>
       </div>
 
-      {/* ── 4.5. RECOMMENDED CROPS ────────────────────────────────────────── */}
-      {krishiIntel?.recommended_crops && krishiIntel?.recommended_crops?.length > 0 && (
-        <div className="p-4 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/50 space-y-3">
-          <div className="flex items-center gap-2">
+          </div>
+        </div>
+      )}
+
+      {/* ── CROPS TAB ────────────────────────────────────────── */}
+      {activeTab === 'crops' && (
+        <div className="space-y-6">
+          {krishiIntel?.recommended_crops && krishiIntel?.recommended_crops?.length > 0 ? (
+            <div className="p-5 rounded-2xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/50 space-y-3">
+              <div className="flex items-center gap-2">
             <Sprout className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">Recommended Crops for Current Weather</h4>
           </div>
@@ -252,6 +278,13 @@ export const KrishiIntelligenceCard: React.FC<KrishiIntelligenceCardProps> = ({
               </span>
             ))}
           </div>
+        </div>
+            </div>
+          ) : (
+            <div className="p-6 text-center text-sm text-slate-500 dark:text-slate-400">
+              No specific crop recommendations available right now.
+            </div>
+          )}
         </div>
       )}
 
