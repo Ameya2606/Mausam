@@ -89,7 +89,7 @@ export const Header: React.FC<HeaderProps> = ({
         
         {/* Primary MAUSAM Branding */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-sky-600 via-blue-700 to-indigo-800 flex items-center justify-center shadow-lg shadow-sky-500/20 text-white font-extrabold shrink-0">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-sky-600 dark:bg-sky-500 flex items-center justify-center shadow-sm text-white font-extrabold shrink-0">
             <CloudSun className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <div>
@@ -127,8 +127,8 @@ export const Header: React.FC<HeaderProps> = ({
             onClick={() => onToggleMode('personalized')}
             className={`px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold flex items-center gap-1 sm:gap-1.5 transition ${
               activeMode === 'personalized'
-                ? 'bg-gradient-to-r from-sky-500 to-indigo-600 text-white shadow-md shadow-sky-500/20'
-                : 'text-sky-700 dark:text-sky-300 hover:text-sky-900 dark:hover:text-white'
+                ? 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm border border-slate-300 dark:border-slate-600'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
@@ -355,10 +355,10 @@ export const Header: React.FC<HeaderProps> = ({
           {onOpenAssistant && (
             <button
               onClick={onOpenAssistant}
-              className="flex items-center gap-1 sm:gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white text-xs sm:text-sm font-bold shadow-md shadow-sky-500/20 transition active:scale-95"
+              className="flex items-center gap-1 sm:gap-1.5 p-1.5 sm:px-3 sm:py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs sm:text-sm font-bold shadow-sm border border-slate-200 dark:border-slate-700 transition active:scale-95"
               title={t.nav_voice_assistant}
             >
-              <Mic className="w-3.5 h-3.5 text-amber-300 animate-pulse" />
+              <Mic className="w-3.5 h-3.5" />
               <span className="hidden md:inline">{t.nav_voice_assistant}</span>
             </button>
           )}

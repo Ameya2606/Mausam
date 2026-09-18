@@ -92,10 +92,9 @@ function MainApp() {
     try {
       const onboarded = localStorage.getItem('vayusync_onboarded');
       if (!onboarded) {
-        setOnboardingStep('location');
-      } else {
-        setOnboardingStep('completed');
+        localStorage.setItem('vayusync_onboarded', 'true');
       }
+      setOnboardingStep('completed');
 
       const savedContext = localStorage.getItem('vayusync_user_context');
       if (savedContext) {
@@ -408,15 +407,10 @@ function MainApp() {
           {/* Floating Voice Assistant Trigger (Bottom Right, elevated above telemetry bar) */}
           <button
             onClick={() => setIsAssistantOpen(true)}
-            className="fixed bottom-20 right-6 z-50 px-4 py-3 rounded-full bg-gradient-to-r from-sky-500 via-indigo-600 to-purple-600 text-white shadow-2xl shadow-sky-500/40 hover:scale-105 active:scale-95 transition flex items-center gap-2.5 border border-white/20 group"
-            title="Open VayuSync Sahayak Voice Assistant"
+            className="fixed bottom-20 right-6 z-50 p-3.5 rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-xl shadow-slate-200/50 dark:shadow-none hover:scale-105 active:scale-95 transition flex items-center justify-center border border-slate-200 dark:border-slate-700"
+            title="Open Assistant"
           >
-            <div className="relative">
-              <Mic className="w-5 h-5 text-amber-300 animate-pulse" />
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping absolute -top-0.5 -right-0.5" />
-            </div>
-            <span className="text-xs font-bold tracking-wide hidden sm:inline">VayuSync Sahayak</span>
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <Mic className="w-5 h-5" />
           </button>
         </>
       )}

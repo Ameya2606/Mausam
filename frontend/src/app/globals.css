@@ -19,7 +19,7 @@
 
 body {
   color: #0B1F33;
-  background: linear-gradient(180deg, #EDF5FA 0%, #F4F8FB 50%, #EBF3F8 100%);
+  background: #FAFAFA;
   min-height: 100vh;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   overflow-x: hidden;
@@ -29,7 +29,7 @@ body {
 .dark body,
 html.dark body {
   color: #f8fafc;
-  background: radial-gradient(circle at 50% 0%, #0c192c 0%, #060b13 75%, #03070d 100%);
+  background: #0F172A;
 }
 
 /* Glassmorphism utility */
@@ -37,34 +37,34 @@ html.dark body {
   background: rgba(255, 255, 255, 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(224, 242, 254, 0.85);
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(226, 232, 240, 0.85); /* slate-200 */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
 }
 
 .dark .glass-panel,
 html.dark .glass-panel {
-  background: rgba(13, 22, 38, 0.75);
+  background: rgba(30, 41, 59, 0.75); /* slate-800 */
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(56, 189, 248, 0.15);
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  border: 1px solid rgba(71, 85, 105, 0.5); /* slate-600 */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 }
 
 .glass-panel-glow {
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.35);
-  box-shadow: 0 10px 30px -5px rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
 .dark .glass-panel-glow,
 html.dark .glass-panel-glow {
-  background: rgba(15, 23, 42, 0.85);
+  background: rgba(30, 41, 59, 0.85);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  box-shadow: 0 0 25px -5px rgba(14, 165, 233, 0.25);
+  border: 1px solid rgba(71, 85, 105, 0.5);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
 }
 
 .glass-card-hover {
