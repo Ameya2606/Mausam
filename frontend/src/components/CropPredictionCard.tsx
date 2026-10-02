@@ -12,6 +12,12 @@ export const CROP_VALIDATION = {
   Rainfall: { min: 20, max: 300, softMin: 20.2, softMax: 298.6, unit: 'mm', label: 'Rainfall' },
 };
 
+const SOIL_PRESETS = [
+  { name: 'Black Cotton', values: { Nitrogen: '40', Phosporus: '50', Potassium: '50', Ph: '7.2' } },
+  { name: 'Alluvial', values: { Nitrogen: '50', Phosporus: '40', Potassium: '40', Ph: '6.8' } },
+  { name: 'Red Soil', values: { Nitrogen: '30', Phosporus: '20', Potassium: '30', Ph: '5.5' } },
+];
+
 export const CropPredictionCard: React.FC = () => {
   const [formData, setFormData] = useState({
     Nitrogen: '',
@@ -58,6 +64,21 @@ export const CropPredictionCard: React.FC = () => {
     const hasEmptyFields = Object.values(formData).some(val => val === '');
     const hasErrors = Object.values(fieldErrors).some(err => err !== '');
     return !hasEmptyFields && !hasErrors;
+  };
+
+  const handleApplyPreset = (presetValues: Partial<typeof formData>) => {
+    setFormData(prev => ({ ...prev, ...presetValues }));
+    
+    // Clear validation errors for updated fields
+    const newErrors = { ...fieldErrors };
+    const newWarnings = { ...fieldWarnings };
+    Object.entries(presetValues).forEach(([name, value]) => {
+      const { error, warning } = validateField(name, value);
+      newErrors[name] = error || '';
+      newWarnings[name] = warning || '';
+    });
+    setFieldErrors(newErrors);
+    setFieldWarnings(newWarnings);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -174,6 +195,22 @@ export const CropPredictionCard: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <form onSubmit={handleSubmit} className="space-y-4">
+            
+            {/* Quick Presets */}
+            <div className="flex flex-wrap items-center gap-2 mb-4">
+              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mr-1">Soil Presets:</span>
+              {SOIL_PRESETS.map((preset) => (
+                <button
+                  key={preset.name}
+                  type="button"
+                  onClick={() => handleApplyPreset(preset.values)}
+                  className="px-2.5 py-1 text-xs font-semibold rounded-lg bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-800/50 transition-colors"
+                >
+                  {preset.name}
+                </button>
+              ))}
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               {renderInput('Nitrogen')}
               {renderInput('Phosporus')}

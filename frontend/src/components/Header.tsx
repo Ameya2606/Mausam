@@ -32,11 +32,8 @@ interface HeaderProps {
   cities: Array<{ name: string; state: string; lat: number; lon: number; default_persona: string }>;
   onSelectCity: (city: { name: string; state: string; lat: number; lon: number; default_persona: string }) => void;
   onUseCurrentLocation: () => void;
-  activeMode: 'standard' | 'personalized';
-  onToggleMode: (mode: 'standard' | 'personalized') => void;
   onOpenPersonalizeModal: () => void;
   onOpenHelpReportModal: () => void;
-  onOpenAssistant?: () => void;
   isPersonalized: boolean;
   activeSection: string;
   onSelectSection: (section: string) => void;
@@ -50,11 +47,8 @@ export const Header: React.FC<HeaderProps> = ({
   cities,
   onSelectCity,
   onUseCurrentLocation,
-  activeMode,
-  onToggleMode,
   onOpenPersonalizeModal,
   onOpenHelpReportModal,
-  onOpenAssistant,
   isPersonalized,
   activeSection,
   onSelectSection,
@@ -115,30 +109,6 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Center: Dual Mode Switcher (Standard Mausam vs VayuSync Intelligence) */}
-        <div className="flex items-center bg-slate-100/90 dark:bg-slate-800/90 p-0.5 sm:p-1 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm shrink-0">
-          <button
-            onClick={() => onToggleMode('standard')}
-            className={`px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold transition ${
-              activeMode === 'standard'
-                ? 'bg-white dark:bg-slate-900 text-slate-900 dark:text-white shadow-sm border border-slate-200 dark:border-slate-700'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            {t.tab_overview}
-          </button>
-          <button
-            onClick={() => onToggleMode('personalized')}
-            className={`px-2 sm:px-3.5 py-1 sm:py-1.5 rounded-lg text-[10px] sm:text-xs font-semibold flex items-center gap-1 sm:gap-1.5 transition ${
-              activeMode === 'personalized'
-                ? 'bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm border border-slate-300 dark:border-slate-600'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-            <span className="inline">{t.tab_personalized}</span>
-          </button>
-        </div>
 
         {/* Right Controls: Theme Switcher, Language Switcher, Help & Report, Location, Refresh, Personalize */}
         <div className="flex items-center gap-1 sm:gap-2">
@@ -358,17 +328,6 @@ export const Header: React.FC<HeaderProps> = ({
               <RefreshCw className="w-4 h-4" />
             </button>
 
-            {/* Voice Assistant */}
-            {onOpenAssistant && (
-              <button
-                onClick={onOpenAssistant}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold shadow-sm border border-slate-200 dark:border-slate-700 transition active:scale-95"
-                title={t.nav_voice_assistant}
-              >
-                <Mic className="w-3.5 h-3.5" />
-                <span>{t.nav_voice_assistant}</span>
-              </button>
-            )}
           </div>
 
           {/* Mobile/Tablet Overflow Menu */}
@@ -397,15 +356,6 @@ export const Header: React.FC<HeaderProps> = ({
                   <RefreshCw className={`w-4 h-4 text-sky-600 dark:text-sky-400 ${isLiveLoading ? 'animate-spin' : ''}`} />
                   {t.nav_refresh || 'Refresh Data'}
                 </button>
-                {onOpenAssistant && (
-                  <button
-                    onClick={() => { onOpenAssistant(); setOverflowOpen(false); }}
-                    className="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-sky-50 dark:hover:bg-slate-800 w-full text-left"
-                  >
-                    <Mic className="w-4 h-4 text-purple-500" />
-                    {t.nav_voice_assistant || 'Voice Assistant'}
-                  </button>
-                )}
               </div>
             )}
           </div>
@@ -451,14 +401,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             {t.nav_daily}
           </button>
-          <button
-            onClick={() => onSelectSection('radar')}
-            className={`px-3 py-1 rounded-lg transition whitespace-nowrap ${
-              activeSection === 'radar' ? 'bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 font-bold border border-sky-200/60 dark:border-sky-800/60' : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-900'
-            }`}
-          >
-            {t.nav_radar}
-          </button>
+
           <button
             onClick={() => onSelectSection('warnings')}
             className={`px-3 py-1 rounded-lg transition whitespace-nowrap ${
@@ -476,11 +419,6 @@ export const Header: React.FC<HeaderProps> = ({
             Crop
           </button>
 
-          {activeMode === 'personalized' && (
-            <span className="px-2 py-0.5 text-[10px] font-bold rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 whitespace-nowrap ml-2">
-              ✨ {language === 'hi' ? 'वायुसिंक सक्रिय' : language === 'mr' ? 'वायुसिंक सक्रिय' : language === 'bn' ? 'বায়ুসিঙ্ক সক্রিয়' : language === 'te' ? 'వాయుసింక్ యాక్టివ్' : 'VayuSync Active'}
-            </span>
-          )}
         </nav>
 
         {/* Source Telemetry Attribution */}

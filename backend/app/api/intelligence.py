@@ -14,7 +14,6 @@ from ..intelligence.scoring import (
 )
 from ..intelligence.timeline import analyze_routine_impacts
 from ..intelligence.calendar import detect_calendar_conflicts
-from ..intelligence.should_i import evaluate_should_i
 
 router = APIRouter(prefix="/intelligence", tags=["VayuSync Intelligence"])
 
@@ -22,10 +21,6 @@ class SummaryRequest(BaseModel):
     weather: WeatherResponse
     context: UserContext
 
-class ShouldIRequest(BaseModel):
-    query: str
-    weather: WeatherResponse
-    context: UserContext
 
 @router.post("/summary", response_model=IntelligenceSummary)
 async def get_intelligence_summary(req: SummaryRequest):
@@ -82,7 +77,3 @@ async def get_intelligence_summary(req: SummaryRequest):
         visibility_intel=visibility_intel,
     )
 
-@router.post("/should-i", response_model=ShouldIResponse)
-async def ask_should_i(req: ShouldIRequest):
-    """Answers concrete decision queries."""
-    return await evaluate_should_i(req.query, req.weather, req.context)

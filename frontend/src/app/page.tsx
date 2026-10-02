@@ -8,15 +8,14 @@ import {
   Search, 
   Check, 
   ArrowRight, 
-  Sparkles,
   Navigation,
-  Mic
+  Mic,
+  Sparkles
 } from 'lucide-react';
 import { Header } from '../components/Header';
-import { StandardMausam } from '../components/StandardMausam';
-import { VayuSyncPersonalized } from '../components/VayuSyncPersonalized';
+import { FarmerOverview } from '../components/FarmerOverview';
+
 import { PersonalizationModal } from '../components/PersonalizationModal';
-import { AIAssistantModal } from '../components/AIAssistantModal';
 import { JudgeDemoDrawer } from '../components/JudgeDemoDrawer';
 import { HelpReportModal } from '../components/HelpReportModal';
 import { useLanguage } from '../hooks/useLanguage';
@@ -48,7 +47,7 @@ const DEFAULT_USER_CONTEXT: UserContext = {
 
 function MainApp() {
   const { language, setLanguage, t } = useLanguage();
-  const [activeMode, setActiveMode] = useState<'standard' | 'personalized'>('standard');
+
   const [activeSection, setActiveSection] = useState<string>('overview');
   const [context, setContext] = useState<UserContext>(DEFAULT_USER_CONTEXT);
   const [weather, setWeather] = useState<WeatherResponse | null>(null);
@@ -66,7 +65,6 @@ function MainApp() {
   
   // Modals
   const [isPersonalizeOpen, setIsPersonalizeOpen] = useState(false);
-  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
   const [isHelpReportOpen, setIsHelpReportOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
@@ -98,9 +96,6 @@ function MainApp() {
       if (savedContext) {
         const parsed = JSON.parse(savedContext);
         setContext(parsed);
-        if (parsed.is_personalized) {
-          setActiveMode('personalized');
-        }
       }
     } catch {
       // In restricted storage environments
@@ -152,7 +147,7 @@ function MainApp() {
   // Handle saving personalization preferences
   const handleSaveContext = async (updatedCtx: UserContext) => {
     setContext(updatedCtx);
-    setActiveMode('personalized'); // Automatically transition to personalized view upon saving!
+
     try {
       localStorage.setItem('vayusync_user_context', JSON.stringify(updatedCtx));
       localStorage.setItem('vayusync_onboarded', 'true');
@@ -283,11 +278,9 @@ function MainApp() {
         cities={cities}
         onSelectCity={handleSelectCity}
         onUseCurrentLocation={handleUseCurrentLocation}
-        activeMode={activeMode}
-        onToggleMode={(mode) => setActiveMode(mode)}
+
         onOpenPersonalizeModal={() => setIsPersonalizeOpen(true)}
         onOpenHelpReportModal={() => setIsHelpReportOpen(true)}
-        onOpenAssistant={() => setIsAssistantOpen(true)}
         isPersonalized={context.is_personalized}
         activeSection={activeSection}
         onSelectSection={handleSelectSection}
@@ -319,34 +312,14 @@ function MainApp() {
 
         {weather && (
           <>
-            {activeMode === 'standard' ? (
-              /* State 1: Standard Mausam Official Weather Experience */
-              <StandardMausam
+              <FarmerOverview
                 weather={weather}
-                eventIntel={intelligence?.event_planning}
-                visibilityIntel={intelligence?.visibility_intel}
+                intelligence={intelligence}
+                context={context}
                 onSelectCity={handleSelectCity}
                 onOpenPersonalizeModal={() => setIsPersonalizeOpen(true)}
-                onEnablePersonalizedMode={() => {
-                  setActiveMode('personalized');
-                  if (!context.is_personalized) {
-                    setIsPersonalizeOpen(true);
-                  }
-                }}
                 activeSection={activeSection}
               />
-            ) : (
-              /* State 2: VayuSync Personalized Mausam Experience */
-              intelligence && (
-                <VayuSyncPersonalized
-                  weather={weather}
-                  intelligence={intelligence}
-                  context={context}
-                  onOpenPersonalizeModal={() => setIsPersonalizeOpen(true)}
-                  onOpenAssistant={() => setIsAssistantOpen(true)}
-                />
-              )
-            )}
           </>
         )}
 
@@ -364,7 +337,6 @@ function MainApp() {
       <MobileBottomNav
         activeSection={activeSection}
         onSelectSection={handleSelectSection}
-        onOpenAssistant={() => setIsAssistantOpen(true)}
         onOpenPersonalizeModal={() => setIsPersonalizeOpen(true)}
         alertsCount={weather?.alerts?.length || 0}
       />
@@ -391,27 +363,6 @@ function MainApp() {
         context={context}
         onSaveContext={handleSaveContext}
       />
-
-      {/* Conversational AI Assistant (VayuSync Sahayak) */}
-      {weather && intelligence && (
-        <>
-          <AIAssistantModal
-            isOpen={isAssistantOpen}
-            onClose={() => setIsAssistantOpen(false)}
-            weather={weather}
-            intelligence={intelligence}
-            context={context}
-          />
-          {/* Floating Voice Assistant Trigger (Bottom Right, elevated above telemetry bar) */}
-          <button
-            onClick={() => setIsAssistantOpen(true)}
-            className="fixed bottom-20 right-6 z-50 p-3.5 rounded-full bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 shadow-xl shadow-slate-200/50 dark:shadow-none hover:scale-110 hover:-translate-y-1 hover:shadow-2xl active:scale-95 transition-all duration-300 flex items-center justify-center border border-slate-200 dark:border-slate-700 animate-float"
-            title="Open Assistant"
-          >
-            <Mic className="w-5 h-5" />
-          </button>
-        </>
-      )}
 
       {/* Discreet Evaluator Demo Controls Drawer */}
       <JudgeDemoDrawer

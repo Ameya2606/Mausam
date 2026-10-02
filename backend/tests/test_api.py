@@ -56,17 +56,3 @@ def test_intelligence_summary_with_calendar():
     assert len(summary["calendar_conflicts"]) > 0
     assert "precipitation" in summary["calendar_conflicts"][0]["conflict_summary"].lower()
 
-def test_should_i_endpoint():
-    weather_res = client.get("/api/v1/weather?city=Mumbai&provider=mock&scenario=mumbai_monsoon")
-    weather_data = weather_res.json()
-
-    payload = {
-        "query": "Should I carry an umbrella today?",
-        "weather": weather_data,
-        "context": {"interests": ["commute"]}
-    }
-    res = client.post("/api/v1/intelligence/should-i", json=payload)
-    assert res.status_code == 200
-    ans = res.json()
-    assert ans["verdict"] == "YES"
-    assert "umbrella" in ans["headline"].lower()

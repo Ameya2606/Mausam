@@ -18,32 +18,26 @@ import {
   MapPin
 } from 'lucide-react';
 import { WeatherResponse, EventPlanningIntelligence, VisibilityIntelligence } from '../lib/types';
-import { WeatherMap } from './WeatherMap';
-import { DetailedUVGraph } from './DetailedUVGraph';
-import { DetailedColorCodedGraphs } from './DetailedColorCodedGraphs';
-import { VisibilityCard } from './VisibilityCard';
-import { EventPlannerCard } from './EventPlannerCard';
 import { CropPredictionCard } from './CropPredictionCard';
+import { KrishiIntelligenceCard } from './KrishiIntelligenceCard';
 import { useLanguage } from '../hooks/useLanguage';
 import { getLocalizedWeatherCondition, getLocalizedWeekday } from '../lib/weatherConditions';
 
-interface StandardMausamProps {
+interface FarmerOverviewProps {
   weather: WeatherResponse;
-  eventIntel?: EventPlanningIntelligence | null;
-  visibilityIntel?: VisibilityIntelligence | null;
-  onSelectCity: (city: { name: string; state?: string; lat: number; lon: number; default_persona: string }) => void;
-  onOpenPersonalizeModal: () => void;
-  onEnablePersonalizedMode: () => void;
-  activeSection: string;
+  intelligence?: any;
+  context?: any;
+  onSelectCity?: (city: any) => void;
+  onOpenPersonalizeModal?: () => void;
+  activeSection?: string;
 }
 
-export const StandardMausam: React.FC<StandardMausamProps> = ({
+export const FarmerOverview: React.FC<FarmerOverviewProps> = ({
   weather,
-  eventIntel,
-  visibilityIntel,
+  intelligence,
+  context,
   onSelectCity,
   onOpenPersonalizeModal,
-  onEnablePersonalizedMode,
   activeSection,
 }) => {
   const { t, locale, language } = useLanguage();
@@ -70,46 +64,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
   return (
     <div className="w-full space-y-6">
       
-      {/* 1. VayuSync Natural Invitation Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-sky-50 via-indigo-50/70 to-white dark:from-slate-900 dark:via-indigo-950/40 dark:to-slate-900 border border-sky-200/80 dark:border-slate-800 p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="flex items-start gap-3.5">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold shrink-0 mt-0.5 shadow-md shadow-amber-500/20">
-            <Sparkles className="w-5 h-5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400">
-                {t.banner_invitation_tag}
-              </span>
-              <span className="px-2 py-0.5 text-[10px] font-medium rounded-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 shadow-xs">
-                {t.banner_invitation_badge}
-              </span>
-            </div>
-            <h3 className="text-base font-heading font-bold text-[#0B1F33] dark:text-white mt-0.5">
-              {t.banner_invitation_title}
-            </h3>
-            <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 max-w-2xl leading-relaxed">
-              {t.banner_invitation_desc}
-            </p>
-          </div>
-        </div>
 
-        <div className="flex items-center gap-2.5 shrink-0">
-          <button
-            onClick={onOpenPersonalizeModal}
-            className="px-3.5 py-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold border border-slate-200 dark:border-slate-700 shadow-xs transition"
-          >
-            {t.btn_customize}
-          </button>
-          <button
-            onClick={onEnablePersonalizedMode}
-            className="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white text-xs font-bold shadow-md shadow-sky-500/20 transition flex items-center gap-1.5"
-          >
-            <span>{t.banner_btn_enable}</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      </div>
 
       {/* 2. Official Weather Warnings (IMD Protocol) */}
       <div id="warnings" className="w-full">
@@ -139,8 +94,8 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
         )}
       </div>
 
-      {/* ── TWO-COLUMN SPLIT DASHBOARD (Halves scrolling time: Left=Observations & Forecasts, Right=Radar & Deep Analytics) ─── */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
+      {/* ── DASHBOARD ─── */}
+      <div className="flex flex-col gap-6 items-start w-full">
         
         {/* LEFT COLUMN: Observations, Key Metrics & Multi-Day Forecasts */}
         <div className="space-y-6">
@@ -200,25 +155,7 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
-                <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
-                  <Gauge className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 whitespace-normal break-words leading-tight">{t.metric_pressure}</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white whitespace-normal break-words leading-tight">{Math.round(curr.pressure)} hPa</p>
-                </div>
-              </div>
 
-              <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
-                <div className="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-950/60 flex items-center justify-center text-amber-600 dark:text-amber-400 shrink-0">
-                  <Eye className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 whitespace-normal break-words leading-tight">{t.metric_visibility}</p>
-                  <p className="text-sm font-bold text-slate-900 dark:text-white whitespace-normal break-words leading-tight">{curr.visibility} km</p>
-                </div>
-              </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-sky-100 dark:border-slate-700/80 shadow-xs flex items-center gap-2.5 min-w-0 glass-card-hover hover:bg-sky-50/50 dark:hover:bg-slate-700/50">
                 <div className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-950/60 flex items-center justify-center text-orange-600 dark:text-orange-400 shrink-0">
@@ -330,49 +267,16 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
             </div>
           </div>
 
-          {/* 7. Event & Outdoor Sunlight Planner (Balanced on Left Column) */}
-          <div id="event-planner">
-            <EventPlannerCard
-              eventIntel={eventIntel}
-              sunrise={curr.sunrise}
-              sunset={curr.sunset}
-              daylightDuration={daily[0]?.daylight_duration}
-            />
-          </div>
-        </div>
-
-        {/* RIGHT COLUMN: Interactive Radar Map, Analytics & Sunlight Intelligence */}
-        <div className="space-y-6">
-          {/* 10. Interactive Weather Radar & Satellite Map */}
-          <div id="radar">
-            <WeatherMap
-              currentLocation={loc}
-              onSelectCoordinates={onSelectCity}
-            />
-          </div>
-
-          {/* 4. Detailed Solar UV Index Graph */}
-          <div id="uv-analytics">
-            <DetailedUVGraph
-              hourly={hourly}
-              currentUV={curr.uv_index || 0}
-            />
-          </div>
-
-          {/* 5. Detailed Color-Coded Multi-Metric Graphs */}
-          <div id="metric-graphs">
-            <DetailedColorCodedGraphs
-              hourly={hourly}
-            />
-          </div>
-
-          {/* 6. Visibility Intelligence & Role Guidance */}
-          <div id="visibility">
-            <VisibilityCard
-              visibilityIntel={visibilityIntel}
-              currentVisibilityKm={curr.visibility}
-            />
-          </div>
+          {/* Krishi Intelligence Advisory */}
+          {intelligence && context && (
+            <div id="krishi">
+              <KrishiIntelligenceCard
+                weather={weather}
+                intelligence={intelligence}
+                context={context}
+              />
+            </div>
+          )}
         </div>
 
       </div>

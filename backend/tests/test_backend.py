@@ -3,7 +3,7 @@ from app.providers.mock import MockWeatherProvider
 from app.models.user_context import UserContext, CalendarEvent
 from app.intelligence.scoring import calculate_mausam_score
 from app.intelligence.calendar import detect_calendar_conflicts
-from app.intelligence.should_i import evaluate_should_i
+
 
 def test_mock_provider_scenarios():
     async def run():
@@ -64,20 +64,3 @@ def test_calendar_conflict_detection():
 
     asyncio.run(run())
 
-def test_should_i_engine():
-    async def run():
-        provider = MockWeatherProvider()
-        mumbai_weather = await provider.get_weather(19.07, 72.87, scenario="mumbai_monsoon")
-        ctx = UserContext()
-
-        res_umbrella = evaluate_should_i("Should I take an umbrella?", mumbai_weather, ctx)
-        assert res_umbrella.verdict == "YES"
-
-        res_car = evaluate_should_i("Should I wash my car today?", mumbai_weather, ctx)
-        assert res_car.verdict == "NO"
-
-        delhi_weather = await provider.get_weather(28.61, 77.20, scenario="delhi_smog")
-        res_run = evaluate_should_i("Should I go for an outdoor run?", delhi_weather, ctx)
-        assert res_run.verdict == "NO"
-
-    asyncio.run(run())
