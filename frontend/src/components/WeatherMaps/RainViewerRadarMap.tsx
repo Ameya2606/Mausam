@@ -64,9 +64,9 @@ export const RainViewerRadarMap: React.FC<RainViewerRadarMapProps> = ({
 
   const TILE_SIZE = 256;
 
-  // Base Map Tile URL generator (CartoDB / OSM / Satellite)
+  // Base Map Tile URL generator (OSM / Esri / Satellite)
   const getBaseTileUrl = useCallback((x: number, y: number, z: number): string => {
-    const subdomains = ['a', 'b', 'c', 'd'];
+    const subdomains = ['a', 'b', 'c'];
     const s = subdomains[Math.abs(x + y) % subdomains.length];
     
     if (baseMapType === 'satellite') {
@@ -74,11 +74,11 @@ export const RainViewerRadarMap: React.FC<RainViewerRadarMapProps> = ({
     }
     
     if (isDark) {
-      // CartoDB Dark Matter tiles
-      return `https://${s}.basemaps.cartocdn.com/rastertiles/dark_all/${z}/${x}/${y}.png`;
+      // Esri Dark Gray Canvas
+      return `https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/${z}/${y}/${x}`;
     } else {
-      // CartoDB Voyager tiles (clean, light, modern)
-      return `https://${s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/${z}/${x}/${y}.png`;
+      // OpenStreetMap Standard
+      return `https://${s}.tile.openstreetmap.org/${z}/${x}/${y}.png`;
     }
   }, [baseMapType, isDark]);
 
