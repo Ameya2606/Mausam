@@ -1,8 +1,60 @@
+import json
 from ..models.weather import WeatherResponse
 from ..models.user_context import UserContext
 from ..models.intelligence import ShouldIResponse
+from ..core.config import settings
 
-def evaluate_should_i(query: str, weather: WeatherResponse, context: UserContext) -> ShouldIResponse:
+async def evaluate_should_i(query: str, weather: WeatherResponse, context: UserContext) -> ShouldIResponse:
+    if settings.GEMINI_API_KEY:
+        try:
+            import google.generativeai as genai
+            genai.configure(api_key=settings.GEMINI_API_KEY)
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            
+            prompt = f"""
+You are VayuSync Sahayak, an intelligent weather decision assistant.
+The user is asking: "{query}"
+
+Current weather in {weather.location.name}:
+- Temperature: {weather.current.temperature}°C (Feels like {weather.current.feels_like}°C)
+- Condition: {weather.current.condition_text}
+- Rain Probability: {weather.current.precipitation_probability}%
+- Wind Speed: {weather.current.wind_speed} km/h
+- AQI: {weather.current.aqi} ({weather.current.aqi_category})
+
+Analyze the weather conditions and answer the user's question.
+If the query is gibberish, entirely unrelated to weather (e.g. "should i die?"), or nonsensical:
+Set verdict to "CONDITIONAL", headline to "I am a Weather Assistant", and reason to "I can only help you make decisions based on the weather."
+
+Otherwise, answer it logically based on the weather conditions provided.
+
+You MUST respond with a raw JSON object (do not wrap in markdown or backticks) that matches this schema exactly:
+{{
+  "query": "{query}",
+  "verdict": "YES" or "NO" or "CONDITIONAL" or "CAUTION",
+  "headline": "A short, actionable headline",
+  "reason": "Detailed explanation based on the weather data",
+  "tip": "A proactive tip",
+  "confidence": 0.90,
+  "data_points": {{
+    "Key1": "Value1",
+    "Key2": "Value2"
+  }}
+}}
+"""
+            response = await model.generate_content_async(prompt)
+            if response.text:
+                text = response.text.strip()
+                if text.startswith("```json"):
+                    text = text[7:-3].strip()
+                elif text.startswith("```"):
+                    text = text[3:-3].strip()
+                data = json.loads(text)
+                return ShouldIResponse(**data)
+        except Exception as e:
+            print(f"Gemini should-i failed: {e}")
+            pass
+
     q = query.lower()
     curr = weather.current
     rain_prob = curr.precipitation_probability

@@ -85,4 +85,4 @@ async def get_intelligence_summary(req: SummaryRequest):
 @router.post("/should-i", response_model=ShouldIResponse)
 async def ask_should_i(req: ShouldIRequest):
     """Answers concrete decision queries."""
-    return evaluate_should_i(req.query, req.weather, req.context)
+    return await evaluate_should_i(req.query, req.weather, req.context)
