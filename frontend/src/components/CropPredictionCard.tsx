@@ -77,32 +77,32 @@ export const CropPredictionCard: React.FC = () => {
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Nitrogen (N)</label>
-                <input type="number" name="Nitrogen" value={formData.Nitrogen} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Nitrogen (N)</label>
+                <input type="number" name="Nitrogen" value={formData.Nitrogen} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900/60 dark:[color-scheme:dark] text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 focus:outline-none shadow-inner transition-all" />
               </div>
               <div className="space-y-1">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Phosphorus (P)</label>
-                <input type="number" name="Phosporus" value={formData.Phosporus} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Phosphorus (P)</label>
+                <input type="number" name="Phosporus" value={formData.Phosporus} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900/60 dark:[color-scheme:dark] text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 focus:outline-none shadow-inner transition-all" />
               </div>
               <div className="space-y-1">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Potassium (K)</label>
-                <input type="number" name="Potassium" value={formData.Potassium} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Potassium (K)</label>
+                <input type="number" name="Potassium" value={formData.Potassium} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900/60 dark:[color-scheme:dark] text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 focus:outline-none shadow-inner transition-all" />
               </div>
               <div className="space-y-1">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Temperature (°C)</label>
-                <input type="number" step="0.01" name="Temperature" value={formData.Temperature} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Temperature (°C)</label>
+                <input type="number" step="0.01" name="Temperature" value={formData.Temperature} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900/60 dark:[color-scheme:dark] text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 focus:outline-none shadow-inner transition-all" />
               </div>
               <div className="space-y-1">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Humidity (%)</label>
-                <input type="number" step="0.01" name="Humidity" value={formData.Humidity} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Humidity (%)</label>
+                <input type="number" step="0.01" name="Humidity" value={formData.Humidity} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900/60 dark:[color-scheme:dark] text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 focus:outline-none shadow-inner transition-all" />
               </div>
               <div className="space-y-1">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">pH Level</label>
-                <input type="number" step="0.01" name="Ph" value={formData.Ph} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">pH Level</label>
+                <input type="number" step="0.01" name="Ph" value={formData.Ph} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900/60 dark:[color-scheme:dark] text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 focus:outline-none shadow-inner transition-all" />
               </div>
               <div className="space-y-1 col-span-2">
-                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">Rainfall (mm)</label>
-                <input type="number" step="0.01" name="Rainfall" value={formData.Rainfall} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none" />
+                <label className="text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">Rainfall (mm)</label>
+                <input type="number" step="0.01" name="Rainfall" value={formData.Rainfall} onChange={handleChange} required className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700/60 bg-white dark:bg-slate-900/60 dark:[color-scheme:dark] text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500 focus:outline-none shadow-inner transition-all" />
               </div>
             </div>
             
@@ -113,7 +113,7 @@ export const CropPredictionCard: React.FC = () => {
           </form>
         </div>
 
-        <div className="flex flex-col items-center justify-center bg-slate-50/50 dark:bg-slate-800/30 rounded-2xl border border-slate-100 dark:border-slate-800 p-6 min-h-[300px]">
+        <div className="flex flex-col items-center justify-center bg-slate-50/50 dark:bg-slate-900/60 shadow-inner rounded-2xl border border-slate-100 dark:border-slate-800/80 p-6 min-h-[300px] relative overflow-hidden">
           {error && (
             <div className="text-center p-4 rounded-xl bg-rose-50 text-rose-600 border border-rose-200 text-sm w-full">
               {error}
