@@ -48,37 +48,6 @@ export function logDiagnostics(event: DiagnosticLogEvent) {
   }
 }
 
-/**
- * Check if the frontend is running in a production browser environment
- * without a public backend URL configured.
- */
-export const isProductionMissingBackendConfig = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  const isLocalhost =
-    window.location.hostname === 'localhost' ||
-    window.location.hostname === '127.0.0.1' ||
-    window.location.hostname === '0.0.0.0';
-
-  if (isLocalhost) return false;
-
-  const configured =
-    process.env.NEXT_PUBLIC_API_BASE_URL ||
-    process.env.NEXT_PUBLIC_API_URL ||
-    process.env.NEXT_PUBLIC_API_BASE;
-
-  return !configured;
-};
-
-/**
- * Single Central API Client / Base URL Configuration:
- *
- * Priority:
- * 1. NEXT_PUBLIC_API_BASE_URL (Standard environment variable)
- * 2. NEXT_PUBLIC_API_URL (Alias)
- * 3. NEXT_PUBLIC_API_BASE (Alias)
- * 4. Localhost / 127.0.0.1 in local development -> http://127.0.0.1:8000/api/v1
- * 5. Production (e.g. Netlify) with configured origin or relative /api/v1 proxy
- */
 export const getApiBase = (): string => {
   const configured =
     process.env.NEXT_PUBLIC_API_BASE_URL ||
@@ -91,22 +60,11 @@ export const getApiBase = (): string => {
     return `${cleanUrl}/api/v1`;
   }
 
-  // Client-side browser execution
-  if (typeof window !== 'undefined') {
-    const isLocalhost =
-      window.location.hostname === 'localhost' ||
-      window.location.hostname === '127.0.0.1' ||
-      window.location.hostname === '0.0.0.0';
-
-    if (isLocalhost) {
-      return 'http://127.0.0.1:8000/api/v1';
-    }
-
-    // In production without NEXT_PUBLIC_API_BASE_URL:
-    // Falls back to relative '/api/v1' for rewrite proxying if configured
-    return '/api/v1';
+  // Local development fallback
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return 'http://localhost:8000/api/v1';
   }
-
+  
   return '/api/v1';
 };
 
@@ -129,7 +87,7 @@ export async function fetchWeather(
   // 1. If backend URL is configured (or running locally), attempt to query FastAPI backend first
   const hasConfiguredBackend =
     Boolean(process.env.NEXT_PUBLIC_API_BASE_URL || process.env.NEXT_PUBLIC_API_URL || process.env.NEXT_PUBLIC_API_BASE) ||
-    (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.hostname === '0.0.0.0'));
+    (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'));
 
   if (hasConfiguredBackend) {
     const params = new URLSearchParams({
@@ -531,7 +489,7 @@ export async function fetchNationalLeaderboard(userId?: string): Promise<Nationa
   const apiBase = getApiBase();
   const fullBase = apiBase.startsWith('http')
     ? apiBase
-    : (typeof window !== 'undefined' ? `${window.location.origin}${apiBase}` : `http://127.0.0.1:8000${apiBase}`);
+    : (typeof window !== 'undefined' ? `${window.location.origin}${apiBase}` : `http://localhost:8000${apiBase}`);
   const url = new URL(`${fullBase}/help/leaderboard`);
   if (userId) {
     url.searchParams.set('user_id', userId);
