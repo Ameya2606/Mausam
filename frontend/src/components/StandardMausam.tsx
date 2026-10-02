@@ -23,6 +23,7 @@ import { DetailedUVGraph } from './DetailedUVGraph';
 import { DetailedColorCodedGraphs } from './DetailedColorCodedGraphs';
 import { VisibilityCard } from './VisibilityCard';
 import { EventPlannerCard } from './EventPlannerCard';
+import { CropPredictionCard } from './CropPredictionCard';
 import { useLanguage } from '../hooks/useLanguage';
 import { getLocalizedWeatherCondition, getLocalizedWeekday } from '../lib/weatherConditions';
 
@@ -375,6 +376,9 @@ export const StandardMausam: React.FC<StandardMausamProps> = ({
         </div>
 
       </div>
+
+      {/* 11. Crop Prediction Module */}
+      <CropPredictionCard />
 
     </div>
   );
