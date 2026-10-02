@@ -10,6 +10,7 @@ import {
 } from './MapProviderService';
 import { Location } from '../../lib/types';
 import { useTheme } from '../../hooks/useTheme';
+import { useLiveStationTemperatures } from './useLiveStationTemperatures';
 
 interface RainViewerRadarMapProps {
   currentLocation: Location;
@@ -49,6 +50,7 @@ export const RainViewerRadarMap: React.FC<RainViewerRadarMapProps> = ({
   baseMapType,
 }) => {
   const { isDark } = useTheme();
+  const { liveData } = useLiveStationTemperatures();
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -210,24 +212,33 @@ export const RainViewerRadarMap: React.FC<RainViewerRadarMapProps> = ({
 
       // Draw City Name & Temperature Label Badge
       ctx.font = 'bold 11px system-ui, -apple-system, sans-serif';
-      const labelText = `${station.name} ${station.temp}°`;
+      
+      const liveTemp = liveData.get(station.name);
+      // Data is stale if older than 30 minutes
+      const isStale = !liveTemp || (Date.now() - liveTemp.fetchedAt > 30 * 60 * 1000);
+      const displayTemp = liveTemp ? liveTemp.temp : station.temp;
+      const labelText = `${station.name} ${displayTemp}°`;
+      
       const textMetrics = ctx.measureText(labelText);
       const badgeW = textMetrics.width + 12;
       const badgeH = 18;
       const badgeX = pos.x + 8;
       const badgeY = pos.y - 9;
 
-      // Badge Background Pill
+      // Badge Background Pill (dim if stale/fallback)
       ctx.beginPath();
       ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 6);
       ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.88)' : 'rgba(255, 255, 255, 0.92)';
+      if (isStale) {
+        ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.5)' : 'rgba(255, 255, 255, 0.6)';
+      }
       ctx.fill();
       ctx.lineWidth = 1;
       ctx.strokeStyle = isDark ? 'rgba(51, 65, 85, 0.8)' : 'rgba(203, 213, 225, 0.8)';
       ctx.stroke();
 
-      // Badge Text
-      ctx.fillStyle = isDark ? '#ffffff' : '#0b1f33';
+      // Badge Text (dim if stale/fallback)
+      ctx.fillStyle = isStale ? (isDark ? '#94a3b8' : '#64748b') : (isDark ? '#ffffff' : '#0b1f33');
       ctx.fillText(labelText, badgeX + 6, badgeY + 13);
     });
 
@@ -265,7 +276,8 @@ export const RainViewerRadarMap: React.FC<RainViewerRadarMapProps> = ({
     currentFrame, 
     currentLocation, 
     getBaseTileUrl, 
-    latlonToPixel
+    latlonToPixel,
+    liveData
   ]);
 
   // Resize listener

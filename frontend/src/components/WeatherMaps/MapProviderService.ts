@@ -149,3 +149,45 @@ export function getWindyEmbedUrl(params: {
 
   return `https://embed.windy.com/embed2.html?lat=${lat.toFixed(4)}&lon=${lon.toFixed(4)}&detailLat=${lat.toFixed(4)}&detailLon=${lon.toFixed(4)}&width=100%25&height=100%25&zoom=${clampedZoom}&level=surface&overlay=${windyOverlay}&product=ecmwf&menu=&message=&marker=&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1`;
 }
+
+export interface LiveStationData {
+  temp: number;
+  weatherCode?: number;
+  fetchedAt: number;
+}
+
+export async function fetchLiveStationTemperatures(stations: MapStationTelemetry[], signal?: AbortSignal): Promise<Map<string, LiveStationData>> {
+  const lats = stations.map(s => s.lat).join(',');
+  const lons = stations.map(s => s.lon).join(',');
+  
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lats}&longitude=${lons}&current=temperature_2m,weather_code&timezone=auto`;
+  
+  const res = await fetch(url, { signal });
+  if (!res.ok) {
+    throw new Error(`Failed to fetch live temperatures: ${res.status}`);
+  }
+  
+  const data = await res.json();
+  const results = new Map<string, LiveStationData>();
+  const now = Date.now();
+  
+  if (Array.isArray(data)) {
+    data.forEach((d, i) => {
+      if (d?.current?.temperature_2m != null) {
+        results.set(stations[i].name, {
+          temp: Math.round(d.current.temperature_2m),
+          weatherCode: d.current.weather_code,
+          fetchedAt: now
+        });
+      }
+    });
+  } else if (data?.current?.temperature_2m != null && stations.length > 0) {
+    results.set(stations[0].name, {
+      temp: Math.round(data.current.temperature_2m),
+      weatherCode: data.current.weather_code,
+      fetchedAt: now
+    });
+  }
+  
+  return results;
+}
