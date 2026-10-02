@@ -1,6 +1,6 @@
 import { Language } from './i18n';
 
-export interface ConditionLocalization {
+interface ConditionLocalization {
   en: string;
   hi: string;
   mr: string;
@@ -8,7 +8,7 @@ export interface ConditionLocalization {
   te: string;
 }
 
-export const WEATHER_CONDITIONS: Record<string, ConditionLocalization> = {
+const WEATHER_CONDITIONS: Record<string, ConditionLocalization> = {
   // WMO Code text matches
   'clear sky': {
     en: 'Clear Sky',
@@ -309,7 +309,7 @@ export function getLocalizedWeatherCondition(
 }
 
 // Weekday localization helper
-export const WEEKDAY_LOCALIZATION: Record<string, { en: string; hi: string; mr: string; bn: string; te: string }> = {
+const WEEKDAY_LOCALIZATION: Record<string, { en: string; hi: string; mr: string; bn: string; te: string }> = {
   Mon: { en: 'Mon', hi: 'सोम', mr: 'सोम', bn: 'সোম', te: 'సోమ' },
   Tue: { en: 'Tue', hi: 'मंगल', mr: 'मंगळ', bn: 'মঙ্গল', te: 'మంగళ' },
   Wed: { en: 'Wed', hi: 'बुध', mr: 'बुध', bn: 'বুধ', te: 'బుధ' },

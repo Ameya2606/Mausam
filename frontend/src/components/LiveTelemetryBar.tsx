@@ -18,7 +18,13 @@ export const LiveTelemetryBar: React.FC<LiveTelemetryBarProps> = ({
   onRefresh,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const lastFetched = React.useMemo(() => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }), [weather]);
+  const lastFetched = React.useMemo(() => {
+    // Just to trigger a recompute when weather updates:
+    if (weather) {
+      // do nothing
+    }
+    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }, [weather]);
 
   if (!weather) return null;
 

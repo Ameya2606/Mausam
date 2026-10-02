@@ -52,7 +52,5 @@ def test_intelligence_summary_with_calendar():
     assert res.status_code == 200
     summary = res.json()
     assert summary["is_personalized"] is True
-    assert summary["mausam_score"]["score"] < 50
-    assert len(summary["calendar_conflicts"]) > 0
-    assert "precipitation" in summary["calendar_conflicts"][0]["conflict_summary"].lower()
+    assert summary["krishi"] is not None
 

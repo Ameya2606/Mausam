@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { Language, Translations, translations } from '../lib/i18n';
 
-export const getLanguageLocale = (lang: Language): string => {
+const getLanguageLocale = (lang: Language): string => {
   switch (lang) {
     case 'hi': return 'hi-IN';
     case 'mr': return 'mr-IN';

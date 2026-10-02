@@ -17,7 +17,7 @@ import {
   CloudRain,
   MapPin
 } from 'lucide-react';
-import { WeatherResponse, EventPlanningIntelligence, VisibilityIntelligence } from '../lib/types';
+import { WeatherResponse } from '../lib/types';
 import { CropPredictionCard } from './CropPredictionCard';
 import { KrishiIntelligenceCard } from './KrishiIntelligenceCard';
 import { useLanguage } from '../hooks/useLanguage';

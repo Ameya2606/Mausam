@@ -244,7 +244,7 @@ export const Header: React.FC<HeaderProps> = ({
                     );
                   }).length === 0 && (
                     <div className="p-4 text-center text-xs text-slate-500 dark:text-slate-400">
-                      No language matching "{langSearch}"
+                      No language matching &quot;{langSearch}&quot;
                     </div>
                   )}
                 </div>

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { getApiBase } from '../lib/api';
 import { Sprout, Loader2, AlertTriangle } from 'lucide-react';
 
-export const CROP_VALIDATION = {
+const CROP_VALIDATION = {
   Nitrogen: { min: 0, max: 140, softMin: 0, softMax: 140, unit: 'kg/ha', label: 'Nitrogen (N)' },
   Phosporus: { min: 5, max: 145, softMin: 5, softMax: 145, unit: 'kg/ha', label: 'Phosphorus (P)' },
   Potassium: { min: 5, max: 205, softMin: 5, softMax: 205, unit: 'kg/ha', label: 'Potassium (K)' },
@@ -259,10 +260,12 @@ export const CropPredictionCard: React.FC = () => {
               <p className="text-sm text-slate-600 dark:text-slate-300 mb-6">{result.message}</p>
               
               <div className="w-full max-w-[240px] aspect-video mx-auto overflow-hidden rounded-2xl border border-emerald-100 dark:border-emerald-900/50 shadow-lg relative bg-white dark:bg-slate-800">
-                <img 
+                <Image 
                   src={`/images/crops/${result.crop.toLowerCase()}.jpg`} 
                   alt={result.crop}
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 240px"
+                  className="object-cover"
                   onError={(e) => { e.currentTarget.src = '/images/crops/fallback.jpg' }}
                 />
               </div>

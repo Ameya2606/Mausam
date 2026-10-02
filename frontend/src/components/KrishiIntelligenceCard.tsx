@@ -30,11 +30,10 @@ export const KrishiIntelligenceCard: React.FC<KrishiIntelligenceCardProps> = ({
   const [activeTab, setActiveTab] = React.useState<'overview' | 'crops'>('overview');
   const curr = weather.current;
   const loc = weather.location;
-  const roleDetails = context.role_details?.gardening;
   const krishiIntel = intelligence.krishi;
 
-  const cropType = roleDetails?.crop_type || t.pers_crop_placeholder;
-  const wateringSchedule = roleDetails?.watering_schedule || t.opt_early_morning;
+  const cropType = t.pers_crop_placeholder;
+  const wateringSchedule = t.opt_early_morning;
 
   const rainProb = curr.precipitation_probability;
   const rain24h = curr.precipitation;
