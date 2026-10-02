@@ -20,11 +20,10 @@ app = FastAPI(
     redoc_url="/redoc",
 )
 
-# CORS configuration supporting localhost, custom origins, and all Netlify preview/production subdomains
+# CORS configuration supporting exact frontend origin
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
-    allow_origin_regex=r"^https://([a-zA-Z0-9_-]+\.)?onrender\.com$",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

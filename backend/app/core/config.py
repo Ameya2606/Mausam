@@ -26,12 +26,12 @@ class Settings(BaseModel):
     # Points & Leaderboard Configuration
     POINTS_PER_VALID_FEEDBACK: int = int(os.getenv("POINTS_PER_VALID_FEEDBACK", "10"))
     
-    # CORS Origins (allow localhost, local IP, and any custom origins from env)
+    # CORS Origins (strict FRONTEND_URL, fallback to localhost for dev)
     CORS_ORIGINS: list[str] = [
-        origin.strip()
+        origin.strip().rstrip('/')
         for origin in os.getenv(
-            "CORS_ORIGINS",
-            "http://localhost:3000,http://127.0.0.1:3000,http://localhost:8000,http://127.0.0.1:8000",
+            "FRONTEND_URL",
+            "http://localhost:3000,http://127.0.0.1:3000",
         ).split(",")
         if origin.strip() and origin.strip() != "*"
     ]
