@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { Header } from '../components/Header';
 import { FarmerOverview } from '../components/FarmerOverview';
+import { VayuSyncPersonalized } from '../components/VayuSyncPersonalized';
+import { AIAssistantModal } from '../components/AIAssistantModal';
 
 import { PersonalizationModal } from '../components/PersonalizationModal';
 import { JudgeDemoDrawer } from '../components/JudgeDemoDrawer';
@@ -38,6 +40,7 @@ const DEFAULT_USER_CONTEXT: UserContext = {
   is_personalized: false,
   interests: ['health', 'running'],
   priorities: ['rain', 'heat', 'aqi'],
+  calendar_events: [],
 };
 
 function MainApp() {
@@ -61,6 +64,8 @@ function MainApp() {
   // Modals
   const [isPersonalizeOpen, setIsPersonalizeOpen] = useState(false);
   const [isHelpReportOpen, setIsHelpReportOpen] = useState(false);
+  const [isAssistantOpen, setIsAssistantOpen] = useState(false);
+  const [showAdvancedTools, setShowAdvancedTools] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
 
@@ -315,6 +320,38 @@ function MainApp() {
                 onOpenPersonalizeModal={() => setIsPersonalizeOpen(true)}
                 activeSection={activeSection}
               />
+              
+              <div className="mt-8 border-t border-slate-200 dark:border-slate-800 pt-8">
+                <button
+                  onClick={() => setShowAdvancedTools(!showAdvancedTools)}
+                  className="w-full py-4 px-6 rounded-2xl bg-white dark:bg-slate-900 border border-sky-100 dark:border-slate-800 shadow-sm flex items-center justify-between hover:bg-sky-50 dark:hover:bg-slate-800/50 transition"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+                      <Sparkles className="w-5 h-5" />
+                    </div>
+                    <div className="text-left">
+                      <h3 className="font-bold text-slate-900 dark:text-white">VayuSync Advanced Intelligence & Tools</h3>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Unlock travel, health, event, and personalized persona tools</p>
+                    </div>
+                  </div>
+                  <div className="text-sky-600 dark:text-sky-400 font-bold text-sm flex items-center gap-2">
+                    {showAdvancedTools ? 'Hide' : 'Explore'}
+                  </div>
+                </button>
+              </div>
+
+              {showAdvancedTools && intelligence && (
+                <div className="mt-8 animate-in slide-in-from-top-4 fade-in duration-300">
+                  <VayuSyncPersonalized
+                    weather={weather}
+                    intelligence={intelligence}
+                    context={context}
+                    onOpenPersonalizeModal={() => setIsPersonalizeOpen(true)}
+                    onOpenAssistant={() => setIsAssistantOpen(true)}
+                  />
+                </div>
+              )}
           </>
         )}
 
@@ -368,6 +405,17 @@ function MainApp() {
         onHourChange={(hr) => setSimulatedHour(hr)}
         onApplyProfile={(prof) => handleSaveContext({ ...context, ...prof })}
       />
+
+      {/* AI Assistant Modal */}
+      {weather && intelligence && (
+        <AIAssistantModal
+          isOpen={isAssistantOpen}
+          onClose={() => setIsAssistantOpen(false)}
+          weather={weather}
+          context={context}
+          intelligence={intelligence}
+        />
+      )}
 
       {/* ── ONBOARDING MODAL 1: LOCATION PERMISSION (ONLY ACCEPT BUTTON) ────── */}
       {onboardingStep === 'location' && (
